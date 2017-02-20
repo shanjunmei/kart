@@ -34,6 +34,7 @@ a:hover{ color:#cd0d15;}
 .order-ul li{position: relative; border-bottom: 1px solid #dedede; font-size: 0.75rem; line-height: 30px;}
 .order-ul li:last-child{border-bottom: none;}
 .order-ul li span{color: #333;}
+.order-ul li input{font-size: 0.75rem;}
 .order-ul li .num-div{overflow: hidden;position: absolute; right: 0px; top: 0px; height: 18px; padding: 6px 0;}
 .order-ul li .num-div i{width: 18px; height: 18px; display: block; float: left;}
 .order-ul li .num-div span{display: block; float: left; padding: 0 7px; line-height: 20px;}
@@ -106,7 +107,7 @@ background: -o-linear-gradient( top,#a20000,#d41018);
 .reserve_list dl{ position:relative; border-bottom:1px solid #eee; font-size:0.8rem; padding:0.7rem 3rem 0.6rem 0;/*font-weight:bold;*/ line-height:1.2rem; overflow:hidden;}
 .reserve_list dl a.reserve_button{ position:absolute; top:0.9rem; right:0;border-radius:3px; border:1px solid #cd0d15; font-size:0.8rem; padding:0.2rem 0.4rem 0.1rem; font-weight:normal; color:#cd0d15;}
 .reserve_list dl a.reserve_button.no{ border:1px solid #818181; color:#818181;}
-.reserve_list dl dd{ position:relative; top:-2px; right:0.8rem;}
+.reserve_list dl dd{ position:relative; top:3px; right:0.8rem;}
 .reserve_list dl dt ul li{ float:left;}
 .reserve_list dl dt ul li.li2{ padding:0 0 0 0.8rem;}
 .reserve_list .time1{ font-size:1.05rem; display:block; margin:-1px 0 0 0;}
