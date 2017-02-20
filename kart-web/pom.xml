@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<project
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+        xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.ffzx.kart</groupId>
+
+    <artifactId>kart-web</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>kart-web</name>
+    <url>http://maven.apache.org</url>
+
+    <!--web依赖包版本定义 -->
+    <properties>
+        <parent.web.version>2.0.0-SNAPSHOT</parent.web.version>
+        <parent.core.version>2.0.0-SNAPSHOT</parent.core.version>
+        <jetty.port>8081</jetty.port>
+    </properties>
+
+
+    <build>
+        <finalName>kart-web</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId><!--org.mortbay.jetty-->
+                <artifactId>jetty-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
