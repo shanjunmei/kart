@@ -2,7 +2,7 @@
 /* CSS Document */
 body,ul,a,li,img,dt,dl,dd,h1,h2,h3,h4,h5,h6,h7,input,p,form{margin:0px;padding:0px;}
 input{font-family:"Arial","苹方","思源黑体","微软雅黑";}
-body, html{ height:100%;font-size:12px;}
+body, html{ height:100%;font-size:16px;}
 body{font-family:"Arial","苹方","思源黑体","微软雅黑"; line-height:1.5; color:#333; font-size:12px; background:#f7f8f8;}
 img{vertical-align:top;width:100%;}
 ul{list-style:none;}
@@ -13,7 +13,7 @@ a:hover{ color:#cd0d15;}
 
 /*下单详情*/
 .order{padding: 10px 0;}
-.div-bg{background-color: #fff; border-top: 1px solid #b3b3b3; border-bottom: 1px solid #b3b3b3; box-shadow: 1px 0 5px rgba(0,0,0,0.13); padding: 10px; margin-bottom: 5.5px;}
+.div-bg{background-color: #fff; border-top: 1px solid #b3b3b3; border-bottom: 1px solid #b3b3b3; box-shadow: 1px 0 5px rgba(0,0,0,0.13); padding: 10px 10px 5px; margin-bottom: 5.5px;}
 .bor1{border-bottom: 1px solid #dedede;}
 .ticket h3{font-size: 1rem; font-weight: normal; margin-bottom: 3px;}
 .price-ul{display: block; overflow: hidden; margin: 0 0 3px;}
@@ -116,7 +116,7 @@ background: -o-linear-gradient( top,#a20000,#d41018);
 .reserve_list dd span.reserve_txt{ margin:-2px;}
 /*场地预定*/
 .page-body{border-bottom: 1px solid #dedede; position:relative; padding:0 6rem 0 0;}
-.page-body a.tel{ position:absolute; right:0; top:4px;border-radius:6px; border:1px solid #cd0d15; font-size:0.85rem; padding:0.2rem 0.6rem 0.2rem 2rem; color:#cd0d15; background:#FFF url(../images/tel_ico.jpg) 10px 5px no-repeat;background-size: auto 18px;}
+.page-body a.tel{ position:absolute; right:0; top:4px;border-radius:6px; border:1px solid #cd0d15; font-size:0.85rem; padding:0.2rem 0.6rem 0.2rem 2rem; color:#cd0d15; background:#FFF url(../images/tel_ico.jpg) 10px center no-repeat;background-size: auto 18px;}
 .page-body .bor1{ border:none;}
 .page-info{border-top:1px solid #dedede; position:relative; padding:0.4rem 0 0.4rem; margin:0.2rem 0 0 0;}
 .page-info a{ position:absolute; top:1rem; right:0; padding: 0.2rem 0.6rem; text-align: center; color: #fff; font-size: 0.85rem; border-radius: 5px; 
@@ -151,3 +151,6 @@ background: -o-linear-gradient( top,#a20000,#d41018);}
 .index_news dl dd a h3{ font-size:0.9rem;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2; font-weight:normal; overflow: hidden;}
 .index_news dl dd a p{display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden; color:#666;}
 .index_news dl dd a span.news_time{ display:block; color:#999; padding:0 0 5px 0;}
+
+/*订单列表*/
+.order-list-title ul li{width: 20%; padding: 0; text-align: center;}

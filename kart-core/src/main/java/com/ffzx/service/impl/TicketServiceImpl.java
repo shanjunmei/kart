@@ -1,5 +1,6 @@
 package com.ffzx.service.impl;
 
+import com.ffzx.commerce.framework.model.ServiceException;
 import com.ffzx.kart.model.Game;
 import com.ffzx.kart.model.Member;
 import com.ffzx.kart.model.OrderInfo;
@@ -41,24 +42,24 @@ public class TicketServiceImpl implements TicketService {
         BigDecimal qty=ticketModel.getQty();
 
         if(game==null){
-            throw  new RuntimeException("场次信息错误！");
+            throw  new ServiceException("场次信息错误！");
         }
         if(StringUtils.isBlank(telephone)){
-            throw  new RuntimeException("手机号不能为空！");
+            throw  new ServiceException("手机号不能为空！");
         }
 
         if(qty==null||qty.compareTo(BigDecimal.ZERO)<=0){
-            throw  new RuntimeException("购买数量必须为大于0的整数");
+            throw  new ServiceException("购买数量必须为大于0的整数");
         }
         if(game.getStartTime().before(new Date())){
-            throw  new RuntimeException("不能购买当前时间以前的场次！");
+            throw  new ServiceException("不能购买当前时间以前的场次！");
         }
         String bespeknum=game.getBespeakNum();
         if(StringUtils.isBlank(bespeknum)){
             bespeknum="0";
         }
         if((Integer.parseInt(qty.toString())+Integer.parseInt(game.getParticipantsNumber())>Integer.parseInt(game.getBespeakNum()))){
-            throw  new RuntimeException("购买数量大于当前场次剩余最大可预约数！");
+            throw  new ServiceException("购买数量大于当前场次剩余最大可预约数！");
         }
 
         OrderInfo orderInfo=new OrderInfo();
@@ -119,16 +120,16 @@ public class TicketServiceImpl implements TicketService {
 
     private void validate(TicketModel ticketModel) {
         if(ticketModel==null){
-            throw new RuntimeException("请求参数为空！");
+            throw new ServiceException("请求参数为空！");
         }
         if(StringUtils.isBlank(ticketModel.getGameCode())){
-            throw new RuntimeException("场次为空！");
+            throw new ServiceException("场次为空！");
         }
         if(ticketModel.getQty()==null){
-            throw new RuntimeException("预约数量为空！");
+            throw new ServiceException("预约数量为空！");
         }
         if(StringUtils.isBlank(ticketModel.getTelePhone())){
-            throw new RuntimeException("预约手机号为空！");
+            throw new ServiceException("预约手机号为空！");
         }
 
     }

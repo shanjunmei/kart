@@ -1,10 +1,51 @@
 $(function () {
-    initialOrderList();
+	
+	var userState = $.frontEngine.getUrlParameter('type');
+	
+	initialTitle(userState);
+	
+    initialOrderList(userState);
+    
+    $('.order-list-title li').on('click',function(){
+    	if($('a',this).hasClass('now')){
+    		return;
+    	}
+    	$('.order-list-title li a').removeClass('now');
+    	$('a',this).addClass('now');
+    	
+    	var _type = $(this).attr('data-type');
+    	
+    	/*var _url = window.location.href;
+    	var reqestType=$.frontEngine.getUrlParameter('type');
+    	if(!(typeof(_type) == "undefined")){
+    		_url=_url.replace();
+    	}*/
+    	//if(!(typeof(_type) == "undefined")){
+			 initialOrderList(_type);
+		//}
+    
+    });
 })
 
+function initialTitle(type){
+	$('.order-list-title li a').removeClass('now');
+	if(!(typeof(type) == "undefined") && type != null ){
+			if(type == 0){
+				 $($('.order-list-title li a')[1]).addClass('now');
+			}else if(type == 1){
+				 $($('.order-list-title li a')[2]).addClass('now');
+			}else if(type == 2){
+				 $($('.order-list-title li a')[3]).addClass('now');
+			}else if(type == 3){
+				 $($('.order-list-title li a')[4]).addClass('now');
+			}
+	}else{
+		 $($('.order-list-title li a')[0]).addClass('now');
+	}
+}
 
-function initialOrderList() {
-    var userState = $.frontEngine.getUrlParameter('type');
+function initialOrderList(userState) {
+    
     var _basePath = _pathTotal + 'myOrder.do';
     if(!(typeof(userState) == "undefined")){
         _basePath = _basePath + '?useState=' + userState;

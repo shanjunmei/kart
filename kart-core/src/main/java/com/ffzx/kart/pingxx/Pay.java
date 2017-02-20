@@ -1,5 +1,6 @@
 package com.ffzx.kart.pingxx;
 
+import com.ffzx.commerce.framework.model.ServiceException;
 import com.ffzx.kart.model.OrderInfo;
 import com.ffzx.kart.util.JsonConverter;
 import com.pingplusplus.Pingpp;
@@ -82,10 +83,10 @@ public class Pay {
         if (ex != null) {
             if (ex.getMessage().contains("time_expire")) {
                 logger.error("【" + order.getOrderNo() + "】pingxx时间和本地时间不一致");
-                throw new RuntimeException("支付超时，请重新发起交易！");
+                throw new ServiceException("支付超时，请重新发起交易！");
             } else {
                 logger.error("【" + order.getOrderNo() + "】pingxx支付异常" + ex.getMessage());
-                throw new RuntimeException(ex.getMessage());
+                throw new ServiceException(ex.getMessage());
             }
         }
 
@@ -102,7 +103,7 @@ public class Pay {
             Charge oldCharge = Pay.retrieve(order.getChargeId());//在回调之前校验
             if (oldCharge.getPaid()) {//如果为true表示已经支付了
                 //不需要改变。。
-                throw new RuntimeException("该订单已支付！");
+                throw new ServiceException("该订单已支付！");
             }
         }
 

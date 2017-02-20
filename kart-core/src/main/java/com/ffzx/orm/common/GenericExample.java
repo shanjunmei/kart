@@ -1,5 +1,7 @@
 package com.ffzx.orm.common;
 
+import com.ffzx.commerce.framework.model.ServiceException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,21 +62,21 @@ public abstract class GenericExample<T extends GenericExample.GeneratedCriteria>
 
         public void addCriterion(String condition) {
             if (condition == null) {
-                throw new RuntimeException("Value for condition cannot be null");
+                throw new ServiceException("Value for condition cannot be null");
             }
             criteria.add(new Criterion(condition));
         }
 
         public void addCriterion(String condition, Object value, String property) {
             if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
+                throw new ServiceException("Value for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value));
         }
 
         public void addCriterion(String condition, Object value1, Object value2, String property) {
             if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
+                throw new ServiceException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
         }

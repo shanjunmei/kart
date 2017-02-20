@@ -5,6 +5,7 @@
 
 package com.ffzx.common.utils;
 
+import com.ffzx.commerce.framework.model.ServiceException;
 import com.ffzx.kart.util.CodeGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,12 @@ public class GenericHandlerExceptionResolver implements HandlerExceptionResolver
         String errorMassage = ex.getMessage();
 
         this.logger.error("errorCode:" + errorCode);
-        this.logger.error("错误信息:", ex);
+        if(!(ex instanceof ServiceException)){
+            this.logger.error("错误信息:", ex);
+        }else{
+            this.logger.error("错误信息:", errorMassage);
+        }
+
         if (request.getHeader("accept").indexOf("application/json") > -1 || request.getHeader("X-Requested-With") != null && request.getHeader("X-Requested-With").indexOf("XMLHttpRequest") > -1) {
             Map ret = new HashMap();
             ret.put("errorCode", errorCode);
