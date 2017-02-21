@@ -26,7 +26,7 @@ public class Pay {
 
     //发送退款请求
     public static void refundApply(OrderInfo order) {
-        logger.error("订单【" + order.getOrderNo() != null ? order.getOrderNo() : "不详" + "】发起退款服务==》》pingxx-chargeId=" + order.getChargeId());
+        logger.error("订单【" + order.getCode() != null ? order.getCode() : "不详" + "】发起退款服务==》》pingxx-chargeId=" + order.getChargeId());
         try {
             if (!StringUtils.isEmpty(order.getChargeId())) {
                 BigDecimal d100 = new BigDecimal(100);
@@ -82,10 +82,10 @@ public class Pay {
         }
         if (ex != null) {
             if (ex.getMessage().contains("time_expire")) {
-                logger.error("【" + order.getOrderNo() + "】pingxx时间和本地时间不一致");
+                logger.error("【" + order.getCode() + "】pingxx时间和本地时间不一致");
                 throw new ServiceException("支付超时，请重新发起交易！");
             } else {
-                logger.error("【" + order.getOrderNo() + "】pingxx支付异常" + ex.getMessage());
+                logger.error("【" + order.getCode() + "】pingxx支付异常" + ex.getMessage());
                 throw new ServiceException(ex.getMessage());
             }
         }
@@ -142,8 +142,8 @@ public class Pay {
             } else {
                 // System.out.println("String ,appId = " + charge.getApp());
             }
-            System.out.println(charge);
-            logger.error("根据chargeId查询订单信息【" + id + "】" + charge.toString());
+
+            logger.info("根据chargeId查询订单信息【" + id + "】" + charge.toString());
             return charge;
         } catch (PingppException e) {
             logger.error("", e);

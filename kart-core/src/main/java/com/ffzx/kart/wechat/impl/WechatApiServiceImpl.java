@@ -42,7 +42,7 @@ public class WechatApiServiceImpl implements WechatApiService {
         String payLoad = JsonConverter.toJson(msg);
         String response = HttpClient.post(MSG_URL + token, payLoad);
         Map ret = JsonConverter.from(response, Map.class);
-        System.out.println(ret);
+        logger.info("",ret);
         return true;
     }
 

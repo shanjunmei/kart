@@ -93,7 +93,9 @@ function isEnabled(id,actFlag) {
 						$.frontEngineDialog.executeDialogContentTime(result.infoStr);
 						// SSUI: 重新载入当前页的数据
 						reloadData('data_list');
-					} else {
+					} else if(result.status == 'error'){
+						$.frontEngineDialog.executeDialogContentTime(result.infoStr);
+					}else {
 						dialog({
 							quickClose : true,
 							content : result.msg

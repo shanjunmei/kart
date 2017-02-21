@@ -2,6 +2,9 @@ package com.ffzx.common.utils;
 
 import com.ffzx.kart.model.Member;
 import com.ffzx.kart.util.JsonConverter;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -9,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +22,8 @@ import java.util.Map;
  * @author 柯典佑
  */
 public class OauthInterceptor extends HandlerInterceptorAdapter {
+
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -38,11 +44,21 @@ public class OauthInterceptor extends HandlerInterceptorAdapter {
             member.setWxOpenid(WECHAT_WEB_DEBUG_OPENID);
 
         }*/
+        /*Enumeration headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String key = (String) headerNames.nextElement();
+            String value = request.getHeader(key);
+            logger.info(key + " : " + value);
+        }*/
 
         if (member == null) {
-            String baseUrl = request.getScheme() + "://" + request.getServerName(); //服务器地址
-           // String redirectUrl = URLEncoder.encode(baseUrl + "/kart-admin/Oauth.do", "utf-8");
-            String redirectUrl = URLEncoder.encode(baseUrl + "/Signin.html", "utf-8");
+            String refer=request.getHeader("Referer");
+            String baseUrl = request.getScheme() + "://" + request.getServerName() + "/Signin.html"; //服务器地址
+            if(StringUtils.isNotBlank(refer)){
+                baseUrl=baseUrl+"?refer="+refer;
+                // String redirectUrl = URLEncoder.encode(baseUrl + "/kart-admin/Oauth.do", "utf-8");
+            }
+            String redirectUrl = URLEncoder.encode(baseUrl, "utf-8");
             String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + System.getProperty("wechat.appid") + "&redirect_uri=" + redirectUrl + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
             response.setContentType("text/json");
             PrintWriter out = response.getWriter();

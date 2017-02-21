@@ -32,7 +32,7 @@ public class GenericHandlerExceptionResolver implements HandlerExceptionResolver
         if(!(ex instanceof ServiceException)){
             this.logger.error("错误信息:", ex);
         }else{
-            this.logger.error("错误信息:", errorMassage);
+            this.logger.error("错误信息:{}", errorMassage);
         }
 
         if (request.getHeader("accept").indexOf("application/json") > -1 || request.getHeader("X-Requested-With") != null && request.getHeader("X-Requested-With").indexOf("XMLHttpRequest") > -1) {

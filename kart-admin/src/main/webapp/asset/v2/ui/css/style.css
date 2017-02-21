@@ -25,7 +25,7 @@ body,.wrapper,.main-sidebar,.main-sidebar .sidebar{overflow:hidden;}
 .main-sideber > .sidebar > ul.sidebar-menu{overflow-y:auto;}
 .sidebar-menu,.sidebar-menu:hover{overflow-y:auto;}
 .sidebar-menu > li > a {display:block;padding-left:20px;font-size:14px;}
-.skin-blue .sidebar-menu > li > .treeview-menu {border-left: 3px solid #3c8dbc;margin-left:0;}
+.skin-blue .sidebar-menu > li > .treeview-menu {border-left: 3px solid #3896E0;margin-left:0;}
 
 /* page tab */
 .page_tab .tab_pages{border-bottom:1px solid #ddd;height:47px;padding-top:11px !important;}
@@ -45,7 +45,7 @@ body,.wrapper,.main-sidebar,.main-sidebar .sidebar{overflow:hidden;}
 
 /* content */
 .content-wrapper .content{padding:0;width:100%;}
-.page_tab .tab_content{clear:none;padding:0 15px 47px 0;width:100%;}
+.page_tab .tab_content{clear:none;padding:0 15px 43px 0;width:100%;}
 .tab_content .content{height:100% !important;}
 
 /* footer */

@@ -141,7 +141,7 @@ public class OrderInfoController extends BaseController<OrderInfo, String, Order
 			resultVo.setRecordsTotal(total);
 			resultVo.setInfoData(list);
 		} catch (Exception e) {
-			System.out.print(e);
+			logger.info("",e);
 		}
 		return resultVo;
 	}

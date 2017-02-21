@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ffzx.common.constant.Constant;
 import com.ffzx.common.controller.BaseController;
 import com.ffzx.common.utils.ResultVo;
 import com.ffzx.kart.model.Activity;
@@ -91,7 +92,9 @@ public class VehicleController extends BaseController<Vehicle, String, VehicleEx
 			resultVo.setStatus("success");
 			resultVo.setUrl(getBasePath() + "/toList.do");
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.info("",e);
+			resultVo.setStatus(Constant.ERROR);
+			resultVo.setInfoStr(Constant.ERROR_MSG);
 		}
         return resultVo;
     }

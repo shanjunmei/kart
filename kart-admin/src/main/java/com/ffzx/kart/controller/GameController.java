@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ffzx.common.constant.Constant;
 import com.ffzx.common.controller.BaseController;
 import com.ffzx.common.utils.ResultVo;
 import com.ffzx.kart.model.Game;
@@ -83,7 +84,9 @@ public class GameController extends BaseController<Game, String, GameExample>{
 	        resultVo.setRecordsTotal(total);
 	        resultVo.setInfoData(dataList);
         } catch (Exception e) {
-			
+			logger.info("", e);
+			resultVo.setStatus(Constant.ERROR);
+			resultVo.setInfoStr(Constant.ERROR_MSG);
 		}
         return resultVo;
     }
@@ -95,13 +98,20 @@ public class GameController extends BaseController<Game, String, GameExample>{
 	@ResponseBody
 	public ResultVo updateActFlag(String id, String status,HttpSession session){
 		ResultVo resultVo = new ResultVo();
-		Game game = service.findById(id);
-		if(game!=null){
-			game.setStatus(status);
+		try {
+			Game game = service.findById(id);
+			if(game!=null){
+				game.setStatus(status);
+			}
+			service.update(game);
+			resultVo.setStatus("success");
+	        resultVo.setInfoStr(status.equals("0")?"启用成功":"禁用成功");	
+			return resultVo;
+		} catch (Exception e) {
+			logger.info("", e);
+			resultVo.setStatus(Constant.ERROR);
+			resultVo.setInfoStr(Constant.ERROR_MSG);
 		}
-		service.update(game);
-		resultVo.setStatus("success");
-        resultVo.setInfoStr(status.equals("0")?"启用成功":"禁用成功");	
 		return resultVo;
 	}	
 	
@@ -112,9 +122,16 @@ public class GameController extends BaseController<Game, String, GameExample>{
 	@ResponseBody
 	public ResultVo updateGame(Game game,HttpSession session){
 		ResultVo resultVo = new ResultVo();
-		service.updateSelective(game);
-		resultVo.setStatus("success");
-		resultVo.setUrl(getBasePath() + "/toList.do");
+		try {
+			service.updateSelective(game);
+			resultVo.setStatus("success");
+			resultVo.setUrl(getBasePath() + "/toList.do");
+			return resultVo;
+		} catch (Exception e) {
+			logger.info("", e);
+			resultVo.setStatus(Constant.ERROR);
+			resultVo.setInfoStr(Constant.ERROR_MSG);
+		}
 		return resultVo;
 	}	
 	
@@ -135,7 +152,7 @@ public class GameController extends BaseController<Game, String, GameExample>{
 	        modelMap.put("view", view);
 	        modelMap.put("gameUserInfoModelList", gameUserInfoModelList);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.info("",e);
 		}
         return "Game/Edit";
     }
@@ -174,7 +191,9 @@ public class GameController extends BaseController<Game, String, GameExample>{
  	      
         	
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.info("", e);
+			resultVo.setStatus(Constant.ERROR);
+			resultVo.setInfoStr(Constant.ERROR_MSG);
 		}
         return resultVo;
     }

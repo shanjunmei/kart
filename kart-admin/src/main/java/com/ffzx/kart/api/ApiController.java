@@ -1,6 +1,7 @@
 package com.ffzx.kart.api;
 
 
+import com.ffzx.commerce.framework.model.ServiceException;
 import com.ffzx.common.utils.WebUtils;
 import com.ffzx.kart.model.*;
 import com.ffzx.kart.pingxx.Pay;
@@ -67,7 +68,7 @@ public class ApiController {
             if (orderInfo != null) {
                 ret.put("data", orderInfo);
             } else {
-                throw new RuntimeException("购买失败");
+                throw new ServiceException("购买失败");
             }
         } catch (Exception e) {
             ret.put("code", "1");
@@ -184,7 +185,8 @@ public class ApiController {
      */
     @RequestMapping("login")
     @ResponseBody
-    public Member login(Member entity) {
+    public Map<String,Object> login(Member entity,HttpServletRequest request) {
+        Map<String,Object> ret=new HashMap<>();
         MemberExample example = new MemberExample();
 
         Map<String, String> map = wechatApiService.oauth(entity.getWxOpenid());
@@ -217,7 +219,9 @@ public class ApiController {
         member.setPassword(null);
         WebUtils.createSession();
         WebUtils.setSessionAttribute("loginMember", member);
-        return member;
+        ret.put("loginInfo",member);
+        ret.put("refer",request.getParameter("refer"));
+        return ret;
     }
 
     /**
@@ -237,7 +241,7 @@ public class ApiController {
     public Object orderCharge(String orderNo) {
         OrderInfo order = orderInfoService.findByCode(orderNo);
         if(order.getStartTime().before(new Date())){
-            throw new RuntimeException("订单已过期！");
+            throw new ServiceException("订单已过期！");
         }
         Game game=gameService.findByCode(order.getGameCode());
         String bespeknum=game.getBespeakNum();
@@ -245,7 +249,7 @@ public class ApiController {
             bespeknum="0";
         }
         if((Integer.parseInt(order.getBuyCount())+Integer.parseInt(game.getParticipantsNumber())>Integer.parseInt(bespeknum))){
-            throw  new RuntimeException("购买数量大于当前场次剩余最大可预约数！");
+            throw  new ServiceException("购买数量大于当前场次剩余最大可预约数！");
         }
         Member member = getLoginMember();
         String openid = "";

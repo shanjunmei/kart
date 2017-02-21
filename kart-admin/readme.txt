@@ -1,2 +1,2 @@
-zhuguojin:主要提供页面展示,主要包含controller,页面对应vo对象
-依赖关系:pms-web依赖pms-core
+李淼淼:后台管理系统，controller和页面、包含当前未分离的供前端系统访问的Api接口
+依赖关系:kart-admin依赖kart-core

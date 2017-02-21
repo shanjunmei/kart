@@ -1,5 +1,6 @@
 package com.ffzx.common.controller;
 
+import com.ffzx.commerce.framework.model.ServiceException;
 import com.ffzx.common.utils.ResultVo;
 import com.ffzx.kart.util.JsonConverter;
 import com.ffzx.orm.common.GenericExample;
@@ -58,7 +59,7 @@ public abstract class BaseController<T, PK, EX extends GenericExample<?>> extend
         }
 
 
-        List<T> dataList = getService().selectByEntity(entity);
+        List<T> dataList = getService().selectByExample(example);
         if(page!=null){
             total = (int) page.getTotal();
         }
@@ -111,8 +112,8 @@ public abstract class BaseController<T, PK, EX extends GenericExample<?>> extend
             }
            return params;
         } catch (Exception e) {
-            logger.info("query enity convert fail ",e);
-            throw new RuntimeException("query entity convert fail");
+           // logger.info("query enity convert fail ",e);
+            throw new ServiceException("query entity convert fail");
         }
 
 
