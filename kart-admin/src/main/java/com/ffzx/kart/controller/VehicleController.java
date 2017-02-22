@@ -1,7 +1,6 @@
 package com.ffzx.kart.controller;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -13,16 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ffzx.common.constant.Constant;
 import com.ffzx.common.controller.BaseController;
 import com.ffzx.common.utils.ResultVo;
-import com.ffzx.kart.model.Activity;
-import com.ffzx.kart.model.Game;
-import com.ffzx.kart.model.GameExample;
 import com.ffzx.kart.model.User;
 import com.ffzx.kart.model.Vehicle;
 import com.ffzx.kart.model.VehicleExample;
-import com.ffzx.kart.model.VehicleExample.Criteria;
 import com.ffzx.kart.util.CodeGenerator;
-import com.ffzx.kart.util.DateUtil;
-import com.ffzx.kart.vo.GameModel;
 import com.ffzx.service.VehicleService;
 
 /**

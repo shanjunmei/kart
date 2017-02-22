@@ -188,7 +188,14 @@ public class ApiController {
     public Map<String,Object> login(Member entity,HttpServletRequest request) {
         Map<String,Object> ret=new HashMap<>();
         MemberExample example = new MemberExample();
-
+        if(StringUtils.isBlank(entity.getWxOpenid())){
+            Member m=getLoginMember();
+            if(m!=null){
+                ret.put("loginInfo",m);
+                ret.put("refer",request.getParameter("refer"));
+                return ret;
+            }
+        }
         Map<String, String> map = wechatApiService.oauth(entity.getWxOpenid());
         logger.info(JsonConverter.toJson(map));
         String openId = map.get("openid");
@@ -296,7 +303,7 @@ public class ApiController {
             Event event = Webhooks.eventParse(buffer.toString());
             //String id="";
             // Event event = Event.retrieve(id);
-            logger.info(event.toString());
+
             Object obj = Webhooks.getObject(event.toString());
             if (obj instanceof Charge) {
                 String orderNo = ((Charge) obj).getOrderNo();
