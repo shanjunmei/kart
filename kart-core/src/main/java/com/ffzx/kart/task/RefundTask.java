@@ -1,5 +1,6 @@
 package com.ffzx.kart.task;
 
+import com.ffzx.commerce.framework.context.InitInterface;
 import com.ffzx.kart.service.OrderInfoService;
 import com.ffzx.task.Task;
 import com.ffzx.task.TaskExcutor;
@@ -13,7 +14,7 @@ import javax.annotation.Resource;
  * Created by Administrator on 2017/2/17.
  */
 @Component
-public class RefundTask implements Task {
+public class RefundTask implements Task,InitInterface {
 
     private final static Logger logger = LoggerFactory.getLogger(RefundTask.class);
 
