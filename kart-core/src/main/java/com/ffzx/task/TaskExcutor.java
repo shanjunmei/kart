@@ -6,10 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 
@@ -18,11 +18,10 @@ public class TaskExcutor implements Runnable {
 
     private final static Logger logger = LoggerFactory.getLogger(TaskExcutor.class);
     private volatile boolean shutdown = false;
-    // @Resource
-    private Executor excutor = Executors.newFixedThreadPool(5);// ApplicationContextUtil.getBean(Executor.class);
+    @Resource
+    private Executor excutor;//Executors.newFixedThreadPool(5);// ApplicationContextUtil.getBean(Executor.class);
 
     public TaskExcutor() {
-        new Thread(this).start();
         logger.info("TaskExcutor init");
         //excutor.execute(this);
     }
@@ -90,6 +89,10 @@ public class TaskExcutor implements Runnable {
             }
 
         }
+    }
+
+    public void stop() {
+        shutdown = true;
     }
 
 }

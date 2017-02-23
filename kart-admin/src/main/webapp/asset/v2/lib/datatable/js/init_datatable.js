@@ -403,7 +403,21 @@ define(['ff/datatable'], function(){
 								// 处理自定义格式
 								$.each(map_format, function(mk, mv){
 									var convertTime = function(datetime){
-										return new Date((isNaN(Number(datetime))) ? datetime : Number(datetime));
+										var _datetime = '';
+										var intDatetime = parseInt(datetime);
+										var _arr = ['', null, 'null', 0, '0', undefined, 'undefined', false, 'false'];
+										
+										if (_arr.indexOf(datetime) == -1) {
+											
+											if (isNaN(intDatetime) == false && String(intDatetime).length == 13) {
+												_datetime = new Date(intDatetime);
+											}
+											else {
+												_datetime = new Date(datetime);
+											}											
+											_datetime = _datetime.format(mv['datetime']);
+										}										
+										return _datetime;
 									}
 									
 									// if ONE dimension
@@ -412,7 +426,7 @@ define(['ff/datatable'], function(){
 										if (k == mk) {
 											
 											if ('datetime' in mv) {
-												val[mk] = convertTime(val[mk]).format(mv['datetime']);												
+												val[mk] = convertTime(val[mk]);												
 											}
 										}										
 									} else {										
@@ -422,8 +436,8 @@ define(['ff/datatable'], function(){
 											var ret = _val;
 											
 											if ('datetime' in mv) {
-												ret = convertTime(_val).format(mv['datetime']);
-											}
+												ret = convertTime(_val);
+											}											
 											return ret;
 										});
 									}									

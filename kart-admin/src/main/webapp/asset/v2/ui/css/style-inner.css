@@ -51,7 +51,7 @@ textarea:hover
 #mask_loading #canvasLoader::after{content:'处理中，请稍候...';color:#fff;display:inline-block;padding:10px 0 0 15px;vertical-align:top;font-weight: normal !important;}
 
 .iframeFullPage{position:fixed;top:0;right:0;left:0;bottom:0;z-index:10;margin:auto;}
-.noScroll{overflow:hidden !important;visibility:hidden;}
+.noScroll{overflow:hidden !important;}
 .ff_DataTable th, .ff_DataTable td{white-space:inherit;}
 th.selectAll, .clm_checkbox{text-align: center;width: 15px !important;}
 .clm_index{text-align: center; width:0 !important;}

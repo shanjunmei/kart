@@ -1,13 +1,12 @@
 package com.ffzx.kart.task;
 
-import com.ffzx.service.OrderInfoService;
+import com.ffzx.kart.service.OrderInfoService;
 import com.ffzx.task.Task;
 import com.ffzx.task.TaskExcutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 /**
@@ -33,7 +32,7 @@ public class RefundTask implements Task {
 
     }
 
-    @PostConstruct
+    //@PostConstruct
     public void init() {
         logger.info("RefundTask init");
         TaskExcutor.createAndAddTask(this, 30*60);

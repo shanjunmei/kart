@@ -16,7 +16,7 @@ import com.ffzx.kart.model.User;
 import com.ffzx.kart.model.Vehicle;
 import com.ffzx.kart.model.VehicleExample;
 import com.ffzx.kart.util.CodeGenerator;
-import com.ffzx.service.VehicleService;
+import com.ffzx.kart.service.VehicleService;
 
 /**
  * 车辆控制器层

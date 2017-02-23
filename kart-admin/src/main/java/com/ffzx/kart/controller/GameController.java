@@ -22,7 +22,7 @@ import com.ffzx.kart.model.User;
 import com.ffzx.kart.util.DateUtil;
 import com.ffzx.kart.vo.GameModel;
 import com.ffzx.kart.vo.GameUserInfoModel;
-import com.ffzx.service.GameService;
+import com.ffzx.kart.service.GameService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 

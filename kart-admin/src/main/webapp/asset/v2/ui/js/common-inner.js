@@ -218,8 +218,10 @@ $(window).load(ffzx.util.adjustInput);
 //方法：生成整页的 iframe 浮动窗口
 function iframeFullPage(url, winSize){
 
-	var _winSize = {};		
-	$('body').addClass('noScroll');	
+	var _winSize = {};	
+	
+	$('body').addClass('noScroll');
+	$('[id="mask_loading"]').show();
 	
 	var $iframe = $('.iframeFullPage');
 	var winHeight = $(self.window).height();
@@ -255,7 +257,8 @@ function iframeFullPage(url, winSize){
 			winWidth = _winSize.w;
 		}
 		
-		winWidth = winWidth + 'px';			
+		winWidth = winWidth + 'px';
+		
 	}
 	
 	var iframe = '<iframe frameborder="0" scrolling="auto" src="'+ url +'" name="' + winName + ','+ window.location.href + '" class="iframeFullPage" style="height:' + winHeight + 'px;width:' + winWidth + '">';

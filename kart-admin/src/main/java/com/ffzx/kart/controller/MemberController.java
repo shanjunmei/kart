@@ -3,7 +3,7 @@ package com.ffzx.kart.controller;
 import com.ffzx.common.controller.BaseController;
 import com.ffzx.kart.model.Member;
 import com.ffzx.kart.model.MemberExample;
-import com.ffzx.service.MemberService;
+import com.ffzx.kart.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 

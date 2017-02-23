@@ -3,7 +3,7 @@ package com.ffzx.kart.api;
 
 import com.ffzx.kart.model.Member;
 import com.ffzx.kart.wechat.WechatApiService;
-import com.ffzx.service.MemberService;
+import com.ffzx.kart.service.MemberService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

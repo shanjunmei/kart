@@ -6,11 +6,11 @@ import com.ffzx.common.utils.WebUtils;
 import com.ffzx.kart.model.*;
 import com.ffzx.kart.pingxx.Pay;
 import com.ffzx.kart.pingxx.WebHooksVerify;
+import com.ffzx.kart.service.*;
 import com.ffzx.kart.util.JsonConverter;
 import com.ffzx.kart.vo.OrderModel;
 import com.ffzx.kart.vo.TicketModel;
 import com.ffzx.kart.wechat.WechatApiService;
-import com.ffzx.service.*;
 import com.pingplusplus.model.Charge;
 import com.pingplusplus.model.Event;
 import com.pingplusplus.model.Refund;
@@ -91,16 +91,16 @@ public class ApiController {
             criteria.andCreateByEqualTo(userCode);
         }
         if (StringUtils.isNotBlank(useState)) {
-            if("0".equals(useState)){
+            if ("0".equals(useState)) {
                 criteria.andStatusEqualTo("0");
-            }else if("1".equals(useState)){
+            } else if ("1".equals(useState)) {
                 criteria.andStatusEqualTo("1").andUseStateEqualTo("0");
-            }else if("2".equals(useState)){
+            } else if ("2".equals(useState)) {
                 criteria.andUseStateEqualTo("1");
-            }else if("3".equals(useState)){
+            } else if ("3".equals(useState)) {
                 criteria.andStartTimeLessThan(new Date());
             }
-           // criteria.andUseStateEqualTo(useState);
+            // criteria.andUseStateEqualTo(useState);
         }
         example.setOrderByClause("start_time desc");
         List<OrderInfo> orderInfos = orderInfoService.selectByExample(example);
@@ -116,10 +116,10 @@ public class ApiController {
         if (member != null) {
             userCode = member.getCode();
         }
-        int noPay=0;
-        int noUsed=0;
-        int used=0;
-        int invalid=0;
+        int noPay = 0;
+        int noUsed = 0;
+        int used = 0;
+        int invalid = 0;
         OrderInfoExample example = new OrderInfoExample();
         example.createCriteria().andCreateByEqualTo(userCode).andStatusEqualTo("0");
         noPay = orderInfoService.countByExample(example);
@@ -139,7 +139,7 @@ public class ApiController {
 
         Map<String, Integer> info = new HashMap<>();
         info.put("noPay", noPay);
-        info.put("noUsed",noUsed);
+        info.put("noUsed", noUsed);
         info.put("used", used);
         info.put("invalid", invalid);
         return info;
@@ -185,14 +185,14 @@ public class ApiController {
      */
     @RequestMapping("login")
     @ResponseBody
-    public Map<String,Object> login(Member entity,HttpServletRequest request) {
-        Map<String,Object> ret=new HashMap<>();
+    public Map<String, Object> login(Member entity, HttpServletRequest request) {
+        Map<String, Object> ret = new HashMap<>();
         MemberExample example = new MemberExample();
-        if(StringUtils.isBlank(entity.getWxOpenid())){
-            Member m=getLoginMember();
-            if(m!=null){
-                ret.put("loginInfo",m);
-                ret.put("refer",request.getParameter("refer"));
+        if (StringUtils.isBlank(entity.getWxOpenid())) {
+            Member m = getLoginMember();
+            if (m != null) {
+                ret.put("loginInfo", m);
+                ret.put("refer", request.getParameter("refer"));
                 return ret;
             }
         }
@@ -226,8 +226,8 @@ public class ApiController {
         member.setPassword(null);
         WebUtils.createSession();
         WebUtils.setSessionAttribute("loginMember", member);
-        ret.put("loginInfo",member);
-        ret.put("refer",request.getParameter("refer"));
+        ret.put("loginInfo", member);
+        ret.put("refer", request.getParameter("refer"));
         return ret;
     }
 
@@ -247,16 +247,16 @@ public class ApiController {
     @ResponseBody
     public Object orderCharge(String orderNo) {
         OrderInfo order = orderInfoService.findByCode(orderNo);
-        if(order.getStartTime().before(new Date())){
+        if (order.getStartTime().before(new Date())) {
             throw new ServiceException("订单已过期！");
         }
-        Game game=gameService.findByCode(order.getGameCode());
-        String bespeknum=game.getBespeakNum();
-        if(StringUtils.isBlank(bespeknum)){
-            bespeknum="0";
+        Game game = gameService.findByCode(order.getGameCode());
+        String bespeknum = game.getBespeakNum();
+        if (StringUtils.isBlank(bespeknum)) {
+            bespeknum = "0";
         }
-        if((Integer.parseInt(order.getBuyCount())+Integer.parseInt(game.getParticipantsNumber())>Integer.parseInt(bespeknum))){
-            throw  new ServiceException("购买数量大于当前场次剩余最大可预约数！");
+        if ((Integer.parseInt(order.getBuyCount()) + Integer.parseInt(game.getParticipantsNumber()) > Integer.parseInt(bespeknum))) {
+            throw new ServiceException("购买数量大于当前场次剩余最大可预约数！");
         }
         Member member = getLoginMember();
         String openid = "";
@@ -270,6 +270,7 @@ public class ApiController {
 
     /**
      * pingxx 回调接收
+     *
      * @param request
      * @return
      */
@@ -283,23 +284,23 @@ public class ApiController {
                 String value = request.getHeader(key);
                 logger.info(key + " : " + value);
             }
-            String sign=request.getHeader("x-pingplusplus-signature");
+            String sign = request.getHeader("x-pingplusplus-signature");
 
             BufferedReader reader = request.getReader();
             StringBuffer buffer = new StringBuffer();
-            String string="";
+            String string = "";
             while ((string = reader.readLine()) != null) {
                 buffer.append(string);
             }
             reader.close();
-            if(!WebHooksVerify.verifyData(buffer.toString(),sign)){
+            if (!WebHooksVerify.verifyData(buffer.toString(), sign)) {
                 logger.info("验证签名失败");
                 return "fail";
             }
             // 解析异步通知数据
             logger.info("pingxx webhooks 回调请求输出开始");
             logger.info(buffer.toString());
-            logger.info("pingxx webhooks 回调请求输出结束" );
+            logger.info("pingxx webhooks 回调请求输出结束");
             Event event = Webhooks.eventParse(buffer.toString());
             //String id="";
             // Event event = Event.retrieve(id);
@@ -308,7 +309,7 @@ public class ApiController {
             if (obj instanceof Charge) {
                 String orderNo = ((Charge) obj).getOrderNo();
                 OrderInfo order = orderInfoService.findByCode(orderNo);
-                if(order!=null){
+                if (order != null) {
                     if (order.getPayTime() == null) {
                         order.setPayTime(new Date());
                         order.setPayType(((Charge) obj).getChannel());
@@ -316,23 +317,23 @@ public class ApiController {
                         order.setStatus("1");
                         order.setChargeId(((Charge) obj).getId());
                         orderInfoService.updateSelective(order);
-                        gameService.updateBespeak(order,0);
+                        gameService.updateBespeak(order, 0);
                     }
-                }else{
-                    logger.info("找不到该订单："+orderNo);
+                } else {
+                    logger.info("找不到该订单：" + orderNo);
                 }
-            }else if(obj instanceof Refund){
+            } else if (obj instanceof Refund) {
                 logger.info("接受到pingxx 退款通知");
-                String orderNo= ((Refund) obj).getChargeOrderNo();
+                String orderNo = ((Refund) obj).getChargeOrderNo();
                 OrderInfo order = orderInfoService.findByCode(orderNo);
-                if(order!=null){
+                if (order != null) {
                     order.setChargeBackTime(new Date());
                     orderInfoService.refund(order);
                   /*  order.setStatus("2");
                     orderInfoService.updateSelective(order);
                     gameService.updateBespeak(order,1);*/
-                }else{
-                    logger.info("找不到该订单："+orderNo);
+                } else {
+                    logger.info("找不到该订单：" + orderNo);
                 }
 
             }

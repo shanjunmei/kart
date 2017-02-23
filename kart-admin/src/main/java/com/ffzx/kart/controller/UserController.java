@@ -4,7 +4,7 @@ import com.ffzx.common.controller.BaseController;
 import com.ffzx.common.utils.WebUtils;
 import com.ffzx.kart.model.User;
 import com.ffzx.kart.model.UserExample;
-import com.ffzx.service.UserService;
+import com.ffzx.kart.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

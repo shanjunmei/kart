@@ -25,8 +25,8 @@ import com.ffzx.kart.model.User;
 import com.ffzx.kart.util.CodeGenerator;
 import com.ffzx.kart.util.DateUtil;
 import com.ffzx.kart.util.JsonConverter;
-import com.ffzx.service.ActivityService;
-import com.ffzx.service.FileRepoService;
+import com.ffzx.kart.service.ActivityService;
+import com.ffzx.kart.service.FileRepoService;
 
 /**
  * 车辆控制器层

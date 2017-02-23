@@ -15,17 +15,14 @@ public class TaskWorker implements Runnable {
 
     @Override
     public void run() {
-        TimeTask<?> task = null;
-        int interval = 0;
-        task = TaskDataHolder.queue.poll();
-
+        TimeTask<?> task = TaskDataHolder.queue.poll();
         if (task != null) {
-            Date currentTime = new Date();
-            Date lastExcueteTime = task.getLastExcuteTime();
-            Date nextExcuteTime = task.getNextExcuteTime();
-            interval = task.getInterval();
             try {
-
+                int interval = 0;
+                Date currentTime = new Date();
+                Date lastExcueteTime = task.getLastExcuteTime();
+                Date nextExcuteTime = task.getNextExcuteTime();
+                interval = task.getInterval();
                 if (interval > 0) {
                     if ((nextExcuteTime.before(currentTime) && currentTime.after(TaskExcutor.calcNextExcuteTime(lastExcueteTime, interval)))) {// 执行时间在最后执行时间之后
                         task.getTask().excuete();
@@ -34,7 +31,6 @@ public class TaskWorker implements Runnable {
                     } else {
                         TaskExcutor.add(task);
                     }
-
                 }
 
             } catch (Exception e) {
@@ -48,7 +44,7 @@ public class TaskWorker implements Runnable {
 
     private void taskUpdate(TimeTask<?> task) {
         Date currentTime = new Date();
-        Date lastExcuteTime = task.getLastExcuteTime();
+
         task.setNextExcuteTime(TaskExcutor.calcNextExcuteTime(currentTime, task.getInterval()));
         task.setLastExcuteTime(currentTime);
         logger.info("createTime : " + date2Str(task.getCreateTime()) + ",lastExcuteTime :" + date2Str(task.getLastExcuteTime()) + " ,nextExcuteTime : " + date2Str(task.getNextExcuteTime()) + ", interval :" + task.getInterval());
