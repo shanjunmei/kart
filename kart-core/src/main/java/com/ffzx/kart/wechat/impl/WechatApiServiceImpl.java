@@ -85,7 +85,8 @@ public class WechatApiServiceImpl implements WechatApiService {
         Date current = new Date();
         synchronized (token) {
             if (token != null&&token!=null) {
-                if (token.getCreateTime().getTime() + 7100 * 1000 < current.getTime()) {
+                boolean flag = (token.getCreateTime().getTime() + 7100 * 1000) > current.getTime();
+                if (flag) {
                     return token.getToken();
                 }
             }
