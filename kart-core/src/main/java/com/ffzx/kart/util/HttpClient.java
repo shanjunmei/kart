@@ -14,7 +14,10 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.charset.Charset;
 
 /**
@@ -24,15 +27,12 @@ public class HttpClient {
 
 
     /**
-     *
-     * @param method
+     * @param entity
      * @return
      * @throws IOException
      */
-    protected static String execute(HttpUriRequest method) throws IOException {
-        CloseableHttpClient httpclient = HttpClients.createDefault();
-        CloseableHttpResponse response = httpclient.execute(method);
-        HttpEntity entity = response.getEntity();
+    protected static String handleResponseAsString(HttpEntity entity) throws IOException {
+
         String charset = "UTF-8";
         if (entity != null) {
             charset = getContentCharSet(entity);
@@ -42,17 +42,21 @@ public class HttpClient {
         return null;
     }
 
+    protected static HttpEntity execute(HttpUriRequest method) throws IOException {
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        CloseableHttpResponse response = httpclient.execute(method);
+        return response.getEntity();
+    }
+
     /**
-     *
      * @param url
      * @return
      */
     public static String get(String url) {
         HttpGet method = new HttpGet(url);
-
         try {
-            String resp = execute(method);
-            return resp;
+            HttpEntity entity = execute( method);
+            return handleResponseAsString(entity);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -60,7 +64,6 @@ public class HttpClient {
 
 
     /**
-     *
      * @param url
      * @param body
      * @return
@@ -71,8 +74,8 @@ public class HttpClient {
         method.setHeader("Accept", "application/json");
         method.setEntity(new StringEntity(body, Charset.forName("UTF-8")));
         try {
-            String resp = execute(method);
-            return resp;
+            HttpEntity entity = execute( method);
+            return handleResponseAsString(entity);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -85,7 +88,7 @@ public class HttpClient {
      *
      * @param entity must not be null
      * @return the character set, or null if not found
-     * @throws ParseException if header elements cannot be parsed
+     * @throws ParseException           if header elements cannot be parsed
      * @throws IllegalArgumentException if entity is null
      */
     public static String getContentCharSet(final HttpEntity entity)
@@ -98,17 +101,33 @@ public class HttpClient {
         if (entity.getContentType() != null) {
             HeaderElement values[] = entity.getContentType().getElements();
             if (values.length > 0) {
-                NameValuePair param = values[0].getParameterByName("charset" );
+                NameValuePair param = values[0].getParameterByName("charset");
                 if (param != null) {
                     charset = param.getValue();
                 }
             }
         }
 
-        if(StringUtils.isEmpty(charset)){
+        if (StringUtils.isEmpty(charset)) {
             charset = "UTF-8";
         }
         return charset;
     }
 
+    public static void getResource(String url, OutputStream out) {
+        try {
+            HttpGet method = new HttpGet(url);
+            HttpEntity entity = execute(method);
+            entity.writeTo(out);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static void main(String aryz[]) throws FileNotFoundException {
+        String url="http://mmbiz.qpic.cn/mmbiz_gif/IWQ5Or8ZnTyjtDdyFzSfekU9GwtmEor5DGG9QZIxBFtcicd2yZrcib3MxibvXvPzSUbJvsd8geHicTkibBk7nPtYaxw/0?wx_fmt=gif";
+        FileOutputStream out=new FileOutputStream("d:/ix.gif");
+        getResource(url,out);
+    }
 }

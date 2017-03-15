@@ -60,7 +60,7 @@ function initialOrderInfo(id) {
 
             });
 
-
+            initMemberInfo();
         }
     })
 
@@ -94,48 +94,27 @@ function confirmOrder() {
 
 //马上购买支付函数
 function kartpay(orderNo, callback) {
-    console.log('支付接口');
-
+    console.log('支付订单:'+orderNo);
     location.href = 'orderDetails.html?id=' + orderNo;
+}
+/**
+ * 默认当前会员手机号
+ */
+function initMemberInfo() {
+    var _phone = $('#phone');
 
-    /*
-     $.ajax({
-     type:"get",
-     url:'api/orderCharge',
-     data:orderNo,
-     dataType: 'json',
-     success: function(rsp){
+    var _basePath = _pathTotal + 'memberInfo.do';
+    var _getSInfoJson = {};
+    common_ajax({
+        url: _basePath, success: function (getSInfoResult) {
 
-     pingpp.createPayment(rsp.obj, function(result, err){
-     console.log(result);
-     console.log(err.msg);
-     console.log(err.extra);
-     if (result == "success") {
-     // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的支付结果都会跳转到 extra 中对应的 URL。
-     console.log("支付成功");
+            console.log(getSInfoResult);
 
-     if(null != callback)
-     {
-     callback(true);
-     }
-     } else if (result == "fail") {
-     console.log("付款失败"+err.msg + err.extra);
-     if(null != callback)
-     {
-     callback(false);
-     }
-     } else if (result == "cancel") {
-     console.log("取消付款");
-     if(null != callback)
-     {
-     callback(false);
-     }
-     }
-     });
+            if (getSInfoResult&&getSInfoResult.phone) {
+                _phone.val(getSInfoResult.phone);
+            }
 
 
-     }
-     })
-
-     */
+        }
+    })
 }

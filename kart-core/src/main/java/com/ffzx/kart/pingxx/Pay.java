@@ -26,7 +26,7 @@ public class Pay {
 
     //发送退款请求
     public static void refundApply(OrderInfo order) {
-        logger.error("订单【" + order.getCode() != null ? order.getCode() : "不详" + "】发起退款服务==》》pingxx-chargeId=" + order.getChargeId());
+        logger.info("订单【" + (order.getCode() != null ? order.getCode() : "不详") + "】发起退款服务==》》pingxx-chargeId=" + order.getChargeId());
         try {
             if (!StringUtils.isEmpty(order.getChargeId())) {
                 BigDecimal d100 = new BigDecimal(100);
@@ -165,8 +165,14 @@ public class Pay {
     public static void main(String[] args) throws IOException {
         Pingpp.apiKey = "sk_live_ivTijLn1iXD0yLCev548mP0K";
         try {
-            Charge charge = Charge.retrieve("ch_88Gmv1G4Wf18nD4yvLib9OaD");
-            System.out.println(charge.toString());
+           // Charge charge = Charge.retrieve("ch_88Gmv1G4Wf18nD4yvLib9OaD");
+
+            OrderInfo order=new OrderInfo();
+            order.setCode("test");
+            //order.setChargeId();
+
+            String s="订单【" + (order.getCode() != null ? order.getCode() : "不详") + "】发起退款服务==》》pingxx-chargeId=" + order.getChargeId();
+            System.out.println(s);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

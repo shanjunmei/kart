@@ -12,17 +12,17 @@ a:hover{ color:#cd0d15;}
 
 
 /*下单详情*/
-.order{padding: 10px 0;}
-.div-bg{background-color: #fff; border-top: 1px solid #b3b3b3; border-bottom: 1px solid #b3b3b3; box-shadow: 1px 0 5px rgba(0,0,0,0.13); padding: 10px 10px 5px; margin-bottom: 5.5px;}
-.bor1{border-bottom: 1px solid #dedede;}
-.ticket h3{font-size: 1rem; font-weight: normal; margin-bottom: 3px;}
-.price-ul{display: block; overflow: hidden; margin: 0 0 3px;}
+.order{/*padding: 10px 0;*/}
+.div-bg{background-color: #fff;border-top: 1px solid #eee; border-bottom: 1px solid #eee; /*box-shadow: 1px 0 7px rgba(220,220,220,1);*/ padding: 10px; margin-bottom: 10px;}
+.bor1{border-bottom: 1px solid #eee; margin-bottom: 5px;}
+.ticket h3{font-size: 1rem; font-weight: normal; margin-bottom: 8px;}
+.price-ul{display: block; overflow: hidden; margin: 0 0 7px;}
 .price-ul li{margin-right: 20px; float: left; font-size: 0.8rem; color: #666;}
 .price-ul li .price{color: #e63600; font-weight: bold;}
-.address{font-size: 0.8rem; padding: 0 0 5px 30px; line-height: 20.5px; overflow: hidden;}
+.address{font-size: 0.8rem; padding: 0 0 8px 30px; line-height: 20.5px; overflow: hidden;}
 .address i{width: 20.5px; height: 20.5px; vertical-align: middle; display: block; float: left; margin-left: -30px;}
 .address p{float: left;}
-.qita-ul{display: block; overflow: hidden; margin: 6px 0 0;}
+.qita-ul{display: block; overflow: hidden; margin: 8px 0 0;}
 .qita-ul li{width: 33.3%; float: left; font-size: 0.7rem; color: #999; vertical-align: middle;}
 .qita-ul li i{width: 15px; height: 15px; margin-right: 5px; vertical-align: middle; float: left;}
 
@@ -31,21 +31,21 @@ a:hover{ color:#cd0d15;}
 .screenings .screenings-time{color: #333;}
 .screenings .icon-arrow{position: absolute; right: 10px; top: 12px; width: 8px; height: 14px;}
 
-.order-ul li{position: relative; border-bottom: 1px solid #dedede; font-size: 0.75rem; line-height: 30px;}
+.order-ul li{position: relative; border-bottom: 1px solid #eee; font-size: 0.8rem; line-height: 35px;}
 .order-ul li:last-child{border-bottom: none;}
 .order-ul li span{color: #333;}
 .order-ul li input{font-size: 0.75rem;}
-.order-ul li .num-div{overflow: hidden;position: absolute; right: 0px; top: 0px; height: 18px; padding: 6px 0;}
+.order-ul li .num-div{overflow: hidden;position: absolute; right: 0px; top: 0px; height: 18px; padding: 9px 0;}
 .order-ul li .num-div i{width: 18px; height: 18px; display: block; float: left;}
 .order-ul li .num-div span{display: block; float: left; padding: 0 7px; line-height: 20px;}
-.order-ul li .price-total{position: absolute; right: 0px; top: 0px; font-weight: bold;}
-.order-ul li .price-total span{color: #e63600;}
+.order-ul li .price-total{position: absolute; right: 0px; top: 0px; }
+.order-ul li .price-total span{color: #e63600;font-weight: bold;}
 
-.order-num-ul li{font-size: 0.8rem; line-height:35px;}
+.order-num-ul li{font-size: 0.8rem; line-height:30px;}
 .order-num-div{margin-bottom: 5px;}
-.code{position: relative; margin-left: 50px;}
-.code .code-num{font-weight: bold; margin-left: 10px;}
-.code .ifuse{color: #ca6666; margin-left: 20px;}
+.code{/*position: relative; margin-left: 50px;*/ text-align: center;}
+.code .code-num{font-weight: bold; margin-left: 8px;font-size: 0.85rem;}
+.code .ifuse{color: #ca6666; margin-left: 15px;}
 
 .btn{width: 80%; margin: 60px auto 10px;}
 .btn-buy{display: block; padding: 0.5rem 0; text-align: center; color: #fff; font-size: 0.85rem; border-radius: 5px; 
@@ -119,7 +119,7 @@ background: -o-linear-gradient( top,#a20000,#d41018);
 .page-body{border-bottom: 1px solid #dedede; position:relative; padding:0 6rem 0 0;}
 .page-body a.tel{ position:absolute; right:0; top:4px;border-radius:6px; border:1px solid #cd0d15; font-size:0.85rem; padding:0.2rem 0.6rem 0.2rem 2rem; color:#cd0d15; background:#FFF url(../images/tel_ico.jpg) 10px center no-repeat;background-size: auto 18px;}
 .page-body .bor1{ border:none;}
-.page-info{border-top:1px solid #dedede; position:relative; padding:0.4rem 0 0.4rem; margin:0.2rem 0 0 0;}
+.page-info{border-top:1px solid #dedede; position:relative; padding:0.6rem 0; margin:0.6rem 0 0 0;}
 .page-info a{ position:absolute; top:1rem; right:0; padding: 0.2rem 0.6rem; text-align: center; color: #fff; font-size: 0.85rem; border-radius: 5px; 
 background: -moz-linear-gradient( top,#a20000,#d41018); 
 background: -webkit-linear-gradient( top,#a20000,#d41018);
@@ -128,7 +128,7 @@ background: -o-linear-gradient( top,#a20000,#d41018);}
 .page-info dt{ font-size:1rem;}
 .page-info dd{ font-size:0.8rem; color:#666;}
 .page-info dd span{ font-weight:bold; color:#e63600; font-size:1.1rem; padding:0 1rem 0 0;}
-.page{ border-top:1px solid #dedede; position:relative; font-size:0.8rem; padding:0.5rem 0 0 2.4rem;}
+.page{ border-top:1px solid #dedede; position:relative; font-size:0.8rem; line-height: 25px; padding:0.5rem 0 0 2.4rem;}
 .page dl dt{ position:absolute; left:0; top:0.5rem; color:#666;}
 /*首页*/
 .banner{ position:relative;}

@@ -187,42 +187,49 @@ public class ApiController {
     @ResponseBody
     public Map<String, Object> login(Member entity, HttpServletRequest request) {
         Map<String, Object> ret = new HashMap<>();
-        MemberExample example = new MemberExample();
-        if (StringUtils.isBlank(entity.getWxOpenid())) {
+
+        String authCode = request.getParameter("authCode");
+        String refer = request.getParameter("refer");
+        logger.info("authCode :{}", authCode);
+        logger.info("refer :{}", refer);
+        String openId = null;
+
+        Member member = null;
+        boolean iscreate = true;
+
+        if (StringUtils.isBlank(authCode)) {
+
             Member m = getLoginMember();
             if (m != null) {
                 ret.put("loginInfo", m);
-                ret.put("refer", request.getParameter("refer"));
+                ret.put("refer", refer);
+                return ret;
+            } else {
+                ret.put("code", "-3");
+                ret.put("msg", "身份信息为空");
                 return ret;
             }
-        }
-        Map<String, String> map = wechatApiService.oauth(entity.getWxOpenid());
-        logger.info(JsonConverter.toJson(map));
-        String openId = map.get("openid");
-        example.createCriteria().andWxOpenidEqualTo(openId);
-        // example.createCriteria().andCodeEqualTo(entity.getCode()).andPasswordEqualTo(entity.getPassword());
-        List<Member> users = memberService.selectByExample(example);
-        // int count= getService().countByExample(example);
-        Member member = null;
-        boolean iscreate = true;
-        if (users.size() > 0) {
-            WebUtils.createSession();
-            member = users.get(0);
-            iscreate = false;
-            // return member;
         } else {
-            member = entity;
+            Map<String, String> map = wechatApiService.oauth(authCode);
+            logger.info(JsonConverter.toJson(map));
+            openId = map.get("openid");
+            member = memberService.findByOpenId(openId);
+            if (member != null) {
+                iscreate = false;
+            } else {
+                member = new Member();
+            }
 
+            member.setWxOpenid(map.get("openid"));
+            member.setWxNickName(map.get("nickname"));
+            member.setWxHeadimgurl(map.get("headimgurl"));
+            if (iscreate) {
+                memberService.add(member);
+            } else {
+                memberService.updateSelective(member);
+            }
+        }
 
-        }
-        member.setWxOpenid(map.get("openid"));
-        member.setWxNickName(map.get("nickname"));
-        member.setWxHeadimgurl(map.get("headimgurl"));
-        if (iscreate) {
-            memberService.add(member);
-        } else {
-            memberService.updateSelective(member);
-        }
         member.setPassword(null);
         WebUtils.createSession();
         WebUtils.setSessionAttribute("loginMember", member);

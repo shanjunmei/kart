@@ -45,7 +45,7 @@ public class TicketServiceImpl implements TicketService {
             throw  new ServiceException("场次信息错误！");
         }
         if(StringUtils.isBlank(telephone)){
-            throw  new ServiceException("手机号不能为空！");
+            throw  new ServiceException("请输入手机号码！");
         }
 
         if(qty==null||qty.compareTo(BigDecimal.ZERO)<=0){

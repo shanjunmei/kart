@@ -330,6 +330,10 @@ if (typeof FFZX == 'undefined') {
 		$form.find(':radio, :checkbox').removeAttr('checked');
 		$form.find('select').val('').change();
 		$form.find('input[type=hidden]').val('');
+    
+    if ($form.find('.hasDatepicker').length > 0) {
+      $form.find('.hasDatepicker').datepicker('setDate', null);
+    }    
 		
 		if (typeof dataTableID != 'undefined' && (typeof isReload == 'undefined' || (typeof isReload != 'undefined' && isReload != false))) {
 			

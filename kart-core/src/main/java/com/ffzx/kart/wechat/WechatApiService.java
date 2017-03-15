@@ -30,5 +30,9 @@ public interface WechatApiService {
 	 * @return
 	 */
 	public Map<String,String> oauth(String code);
+
+	Map<String, String> getWxUserInfo(String openid, String accessToken);
+
+	Map<String, String> getWxUserInfo(String openid);
 }
 

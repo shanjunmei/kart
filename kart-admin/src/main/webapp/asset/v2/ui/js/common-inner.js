@@ -192,12 +192,12 @@ ffzx.util = {
 				}
 			}
 			
+			/*
 			if ($block.find('.ueditor, textarea').length > 0) {
 				$block.add($block.find('>div')).css({'width':'100%'});
 				$block.find('>div').css({'padding-right':0});		
 			}
-			
-			
+			*/
 		});
 	},
 	

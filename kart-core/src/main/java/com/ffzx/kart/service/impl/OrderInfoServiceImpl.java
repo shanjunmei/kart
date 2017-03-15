@@ -3,15 +3,16 @@ package com.ffzx.kart.service.impl;
 import com.ffzx.common.service.impl.BaseServiceImpl;
 import com.ffzx.kart.mapper.OrderInfoMapper;
 import com.ffzx.kart.model.*;
+import com.ffzx.kart.pingxx.Pay;
+import com.ffzx.kart.service.GameService;
+import com.ffzx.kart.service.OrderDetailService;
+import com.ffzx.kart.service.OrderInfoService;
 import com.ffzx.kart.util.CodeGenerator;
 import com.ffzx.kart.util.DateUtil;
 import com.ffzx.kart.util.SerialCodeGenerator;
 import com.ffzx.kart.vo.GameUserInfoModel;
 import com.ffzx.kart.vo.OrderModel;
 import com.ffzx.kart.vo.SaveOrderModel;
-import com.ffzx.kart.service.GameService;
-import com.ffzx.kart.service.OrderDetailService;
-import com.ffzx.kart.service.OrderInfoService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -291,23 +292,23 @@ public class OrderInfoServiceImpl extends BaseServiceImpl<OrderInfo, String> imp
     @Override
     public List<OrderInfo> findNeedRefundOrder() {
         OrderInfoExample example = new OrderInfoExample();
-        example.createCriteria().andStatusEqualTo("1").andUseStateEqualTo("0").andStartTimeLessThan(new Date());//已经支付，未使用，已过期
+        example.createCriteria().andStatusEqualTo("1").andUseStateEqualTo("0").andOrderSourceEqualTo("0").andStartTimeLessThan(new Date());//已经支付，未使用，已过期
         return getMapper().selectByExample(example);
     }
 
     @Override
     public void refundTask() {
         List<OrderInfo> list = findNeedRefundOrder();
-        logger.info("过期自动退款任务执行开始,找到符合条件的订单 ："+list.size()+" 个");
-        int fail=0;
+        logger.info("过期自动退款任务执行开始,找到符合条件的订单 ：" + list.size() + " 个");
+        int fail = 0;
         for (OrderInfo order : list) {
-            try{
-                refund(order);
-            }catch (Exception e){
+            try {
+                Pay.refundApply(order);
+            } catch (Exception e) {
                 fail++;
-                logger.info("refund error ",e);
+                logger.info("refund error {}", e.getMessage());
             }
         }
-        logger.info("过期自动退款任务执行结束,成功："+(list.size()-fail)," 失败："+fail);
+        logger.info("过期自动退款任务执行结束,成功：" + (list.size() - fail)+" 失败：" + fail);
     }
 }

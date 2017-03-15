@@ -36,14 +36,14 @@ define(['ff/dialog'], function(){
         drag = (drag==null || drag=="" || typeof(drag)=="undefined")? "true" : drag;
         lock = (lock==null || lock=="" || typeof(lock)=="undefined")? "false" : lock;
 
-        dialog({
+        var dl = dialog({
             id: id,
             title: title,
             fixed: fixed,
             resize: resize,
             drag: drag,
             lock: lock,
-            content:"<iframe src='"+ifurl+"' style='width:"+ifwidth+"px;height:"+ifheight+"px;' frameborder='0' scrolling='no'></iframe>"
+            content:"<iframe src='"+ifurl+"' style='width:"+ifwidth+"px;height:"+ifheight+"px;' frameborder='0' scrolling='auto'></iframe>"
             /*onclose: function () {
 				if (this.returnValue) {
 					//console.log($(this.returnValue));
@@ -51,12 +51,12 @@ define(['ff/dialog'], function(){
 				}
 			}*/
         }).showModal();
-
+        return dl;
     };
 
     //有确认键和取消键，确认键有函数
     var executeDialog=function(id,title,content,width,height,callback) {
-        dialog({
+        var dl = dialog({
             id: id,
             icon:'succeed',
             title: title,
@@ -80,29 +80,29 @@ define(['ff/dialog'], function(){
            /* ok:callback,
             cancel: true*/
         }).showModal();
-
+        return dl;
     };
     
     //只有确定键
     var executeDialogOK=function(title,content,width) {
-        dialog({
+        var dl = dialog({
             title: title,
             content: content,
             width:width,
             okValue: '确定',
             ok: function () {autofocus: false}
         }).show();
-
+        return dl;
     };
     //普通提示语
     var executeDialogContent=function(title,content,width) {
-    	 dialog({
+    	 var dl = dialog({
     		 id: 'Promptlanguage',
              title: title,
              content: content,
              width:width
          }).show();
-
+        return dl;
     };
     //定时普通提示语
     var executeDialogContentTime=function(content,time) {
@@ -115,9 +115,8 @@ define(['ff/dialog'], function(){
     	setTimeout(function () {
     		dContent.close().remove();
     	}, time);
-
-    };
-    
+      //return dContent;
+    };    
    
     // ****************************************************************************************************
     // $.frontEngine.methodName形式调用
