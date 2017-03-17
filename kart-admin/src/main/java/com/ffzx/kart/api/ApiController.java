@@ -194,47 +194,42 @@ public class ApiController {
         logger.info("refer :{}", refer);
         String openId = null;
 
-        Member member = null;
+        Member member = getLoginMember();
+        ;
         boolean iscreate = true;
+        if (member == null) {
+            if (StringUtils.isNotBlank(authCode)) {
+                Map<String, String> map = wechatApiService.oauth(authCode);
+                logger.info(JsonConverter.toJson(map));
+                openId = map.get("openid");
+                member = memberService.findByOpenId(openId);
+                if (member != null) {
+                    iscreate = false;
+                } else {
+                    member = new Member();
+                }
 
-        if (StringUtils.isBlank(authCode)) {
-
-            Member m = getLoginMember();
-            if (m != null) {
-                ret.put("loginInfo", m);
-                ret.put("refer", refer);
-                return ret;
+                member.setWxOpenid(map.get("openid"));
+                member.setWxNickName(map.get("nickname"));
+                member.setWxHeadimgurl(map.get("headimgurl"));
+                if (iscreate) {
+                    memberService.add(member);
+                } else {
+                    memberService.updateSelective(member);
+                }
             } else {
                 ret.put("code", "-3");
                 ret.put("msg", "身份信息为空");
                 return ret;
             }
-        } else {
-            Map<String, String> map = wechatApiService.oauth(authCode);
-            logger.info(JsonConverter.toJson(map));
-            openId = map.get("openid");
-            member = memberService.findByOpenId(openId);
-            if (member != null) {
-                iscreate = false;
-            } else {
-                member = new Member();
-            }
-
-            member.setWxOpenid(map.get("openid"));
-            member.setWxNickName(map.get("nickname"));
-            member.setWxHeadimgurl(map.get("headimgurl"));
-            if (iscreate) {
-                memberService.add(member);
-            } else {
-                memberService.updateSelective(member);
-            }
         }
+
 
         member.setPassword(null);
         WebUtils.createSession();
         WebUtils.setSessionAttribute("loginMember", member);
         ret.put("loginInfo", member);
-        ret.put("refer", request.getParameter("refer"));
+        ret.put("refer", refer);
         return ret;
     }
 
