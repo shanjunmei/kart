@@ -61,7 +61,7 @@
             <mvc:exclude-mapping path="/Checktoken.do"/>
             <mvc:exclude-mapping path="/Oauth.do"/>
             <mvc:exclude-mapping path="/FileRepo/file.do"/>
-            <mvc:exclude-mapping path="/OpenApi/**"/>
+          
             <bean class="com.ffzx.common.utils.LoginInterceptor"/>
 
         </mvc:interceptor>
