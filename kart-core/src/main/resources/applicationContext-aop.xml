@@ -8,23 +8,26 @@
 
     <description>Spring Aop Config</description>
 
-    <bean id="excueteTimeCut" class="com.ffzx.common.aop.LogCut"/>
+
+    <bean id="logInterceptor" class="com.ffzx.common.aop.LogInterceptor"/>
 
     <aop:config>
+        <aop:pointcut id="commonlogLointCut" expression="
+             execution(* com.ffzx.common.service.*.*(*) ) or
+             execution(* com.ffzx.common.controller.*.*(*) ) or
+             execution(* com.ffzx.kart.service.*.*(*) ) or
+             execution(* com.ffzx.kart.controller.*.*(*) )
+        "/>
 
-        <aop:pointcut id="baseServicePointCut" expression="execution(* com.ffzx.common.service.*.*(*) )"/>
-        <aop:pointcut id="baseControllerPointCut" expression="execution(* com.ffzx.common.controller.*.*(*) )"/>
-        <aop:pointcut id="servicePointCut" expression="execution(* com.ffzx.kart.service.*.*(*) )"/>
-        <aop:pointcut id="controllerPointCut" expression="execution(* com.ffzx.kart.controller.*.*(*) )"/>
+        <aop:pointcut id="mapperlogLointCut" expression="
+             execution(* com.ffzx.kart.mapper.*.*(*) )
+        "/>
 
-        <aop:pointcut id="mapperPointCut" expression="execution(* com.ffzx.kart.mapper.*.*(*) )"/>
 
-        <aop:aspect order="1" id="logAspect" ref="excueteTimeCut">
-            <aop:around method="intecept" pointcut-ref="baseServicePointCut"/>
-            <aop:around method="intecept" pointcut-ref="baseControllerPointCut"/>
-            <aop:around method="intecept" pointcut-ref="servicePointCut"/>
-            <aop:around method="intecept" pointcut-ref="controllerPointCut"/>
-            <aop:around method="intecept" pointcut-ref="mapperPointCut"/>
+        <aop:advisor pointcut-ref="commonlogLointCut" advice-ref="logInterceptor" order="2"/>
+
+        <aop:aspect order="1" id="logAspect" ref="logInterceptor">
+            <aop:around method="mapperIntecept" pointcut-ref="mapperlogLointCut"/>
         </aop:aspect>
 
 
