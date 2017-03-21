@@ -27,7 +27,7 @@
         <aop:advisor pointcut-ref="commonlogLointCut" advice-ref="logInterceptor" order="2"/>
 
         <aop:aspect order="1" id="logAspect" ref="logInterceptor">
-            <aop:around method="mapperIntecept" pointcut-ref="mapperlogLointCut"/>
+            <aop:around method="logger" pointcut-ref="mapperlogLointCut"/>
         </aop:aspect>
 
 

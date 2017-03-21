@@ -44,7 +44,7 @@ public class LogInterceptor implements MethodInterceptor {
      * @return
      * @throws Throwable
      */
-    public Object mapperIntecept(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object logger(ProceedingJoinPoint joinPoint) throws Throwable {
         long t = System.currentTimeMillis();
         Object ret = joinPoint.proceed();
         t = System.currentTimeMillis() - t;
