@@ -20,7 +20,7 @@ function initialOrderInfo(id) {
 
             var _price = data.preferentialPrice;
             var _oldprice = data.retailPrice;
-            var _address = '深圳市南山区海德大道中68海的农场旁200米红路灯处';
+            var _address = '江西省新余市仙女湖大道职教园区管委会';
             var _playtime = '时长:' + data.time + '分钟';
             // var _iphone = '18565689555';
             var _playTime = data.effectiveTime + ' ' + data.gameNum + '场（' + data.gameTime + '）';

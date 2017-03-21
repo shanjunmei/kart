@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd
+
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <description>Spring Aop Config</description>
+
+    <bean id="excueteTimeCut" class="com.ffzx.common.aop.LogCut"/>
+
+    <aop:config>
+
+        <aop:pointcut id="baseServicePointCut" expression="execution(* com.ffzx.common.service.*.*(*) )"/>
+        <aop:pointcut id="baseControllerPointCut" expression="execution(* com.ffzx.common.controller.*.*(*) )"/>
+        <aop:pointcut id="servicePointCut" expression="execution(* com.ffzx.kart.service.*.*(*) )"/>
+        <aop:pointcut id="controllerPointCut" expression="execution(* com.ffzx.kart.controller.*.*(*) )"/>
+
+        <aop:pointcut id="mapperPointCut" expression="execution(* com.ffzx.kart.mapper.*.*(*) )"/>
+
+        <aop:aspect order="1" id="logAspect" ref="excueteTimeCut">
+            <aop:around method="intecept" pointcut-ref="baseServicePointCut"/>
+            <aop:around method="intecept" pointcut-ref="baseControllerPointCut"/>
+            <aop:around method="intecept" pointcut-ref="servicePointCut"/>
+            <aop:around method="intecept" pointcut-ref="controllerPointCut"/>
+            <aop:around method="intecept" pointcut-ref="mapperPointCut"/>
+        </aop:aspect>
+
+
+    </aop:config>
+
+
+</beans>

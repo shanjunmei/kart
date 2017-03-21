@@ -75,7 +75,7 @@ function initialOrderDetail() {
             }
             var _html = '<div class="ticket div-bg"><h3>' + getSInfoResult.orderInfo.orderName + '</h3><ul class="price-ul"><li>RMB：<span class="price">' + getSInfoResult.orderInfo.favorablePrice + '</span></li><li>门市价：RMB：<span>' + getSInfoResult.orderInfo.actualPrice + '</span></li></ul>';
 
-            _html = _html + '<div class="address bor1"><i class="ic1"><img src="images/ico1.png"></i><p>深圳市南山区海德大道中68海的农场旁200米红路灯处</p></div>';
+            _html = _html + '<div class="address bor1"><i class="ic1"><img src="images/ico1.png"></i><p>江西省新余市仙女湖大道职教园区管委会</p></div>';
 
 
             _html = _html + '<ul class="qita-ul"><li><i class="ic2"><img src="images/ico2.png"></i>时长:' + getSInfoResult.game.time + '分钟</li><li><i class="ic3"><img src="images/ico3.png"></i>过期自动退</li><li><i class="ic4"><img src="images/ico4.png"></i>消费者保障</li></ul></div>';
