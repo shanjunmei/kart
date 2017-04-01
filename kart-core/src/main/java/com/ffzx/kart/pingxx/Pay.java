@@ -3,6 +3,7 @@ package com.ffzx.kart.pingxx;
 import com.ffzx.commerce.framework.model.ServiceException;
 import com.ffzx.kart.model.OrderInfo;
 import com.ffzx.kart.util.JsonConverter;
+import com.ffzx.kart.util.SerialCodeGenerator;
 import com.pingplusplus.Pingpp;
 import com.pingplusplus.exception.PingppException;
 import com.pingplusplus.model.App;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Resource;
 
 
 public class Pay {
@@ -177,5 +180,51 @@ public class Pay {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+    
+
+    public static Charge wxPay(Double total,String order_no, String payType, String time_expire, String value) {
+
+        logger.info("Pay=====>createCharge=====PayUtil.APP_ID>" + PayUtil.APP_ID + "begin");
+        ;
+        Pingpp.apiKey = PayUtil.APIKEY; //api key
+        Charge charge = null;
+        Map<String, Object> chargeMap = new HashMap<String, Object>();
+        int amount = 0;
+        amount = new BigDecimal(total).multiply(new BigDecimal(100)).intValue();
+        Map<String, String> app = new HashMap<String, String>();
+        app.put("id", PayUtil.APP_ID);//支付使用的 app标识。 用做微信公众号支付
+        chargeMap.put("app", app);
+        chargeMap.put("order_no", order_no); //订单编号
+        chargeMap.put("channel", payType);    //支付模式
+        chargeMap.put("amount", amount); //以分为单位的总金额
+        chargeMap.put("client_ip", "127.0.0.1");//客户机IP
+        chargeMap.put("currency", "cny"); //人民币货币代码
+        chargeMap.put("subject", "同道文体在线支付"); //标题
+        chargeMap.put("body", "同道文体竭诚为您服务"); //描述信息
+        chargeMap.put("time_expire", time_expire);//超时时间...
+//		chargeMap.put("extra",getExtra(payType));
+        if (payType.equals("wx_pub")) {
+            Map<String, String> extra = new HashMap<String, String>();
+            extra.put("open_id", value);
+            chargeMap.put("extra", extra);
+        }
+        Exception ex = null;
+        try {
+            charge = Charge.create(chargeMap);
+            PayUtil.log(1, "createCharge", "支付凭证：" + charge.getId());
+        } catch (Exception e) {
+            ex = e;
+            logger.error("pingxx exception", e);
+
+        }
+        if (ex != null) {
+            if (ex.getMessage().contains("time_expire")) {
+                throw new ServiceException("支付超时，请重新发起交易！");
+            } else {
+                throw new ServiceException(ex.getMessage());
+            }
+        }
+        return charge;
     }
 }

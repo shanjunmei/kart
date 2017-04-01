@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * 授权拦截器
  *
- * @author 柯典佑
+ * @author 李淼淼
  */
 public class OauthInterceptor extends HandlerInterceptorAdapter {
 

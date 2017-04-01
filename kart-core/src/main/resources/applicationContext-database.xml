@@ -37,9 +37,9 @@
     </bean>
 
     <!-- 配置数据源 druid连接池 -->
-    <bean id="abstractDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
-          destroy-method="close" abstract="true">
-        <!-- <property name="url" value="${jdbc.url}" /> -->
+    <bean id="dataSourcejdbc" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
+          destroy-method="close"> <!-- abstract="true" -->
+         <property name="url" value="${jdbc.url.master}" />
         <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
 
@@ -77,7 +77,7 @@
         <!-- <property name="filters" value="stat" /> -->
         <property name="filters" value="mergeStat"/>
     </bean>
-    <bean id="dataSourcejdbc" class="com.ffzx.commerce.framework.dao.DynamicRoutingDataSource">
+<!--    <bean id="dataSourcejdbc" class="com.ffzx.commerce.framework.dao.DynamicRoutingDataSource">
         <property name="defaultTargetDataSource">
             <bean parent="abstractDataSource" p:url="${jdbc.url.slave}"/>
         </property>
@@ -88,6 +88,6 @@
                 </entry>
             </map>
         </property>
-    </bean>
+    </bean>-->
 
 </beans>

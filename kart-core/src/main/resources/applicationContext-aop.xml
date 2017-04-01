@@ -12,15 +12,20 @@
     <bean id="logInterceptor" class="com.ffzx.common.aop.LogInterceptor"/>
 
     <aop:config>
-        <aop:pointcut id="commonlogLointCut" expression="
+  <!--      <aop:pointcut id="commonlogLointCut" expression="
              execution(* com.ffzx.common.service.*.*(*) ) or
              execution(* com.ffzx.common.controller.*.*(*) ) or
              execution(* com.ffzx.kart.service.*.*(*) ) or
              execution(* com.ffzx.kart.controller.*.*(*) )
+        "/>-->
+
+        <aop:pointcut id="commonlogLointCut" expression="
+             execution(* com.ffzx..*.*(..) ) and
+             !execution(* com.ffzx.kart.mapper.*.*(..) )
         "/>
 
         <aop:pointcut id="mapperlogLointCut" expression="
-             execution(* com.ffzx.kart.mapper.*.*(*) )
+             execution(* com.ffzx.kart.mapper.*.*(..) )
         "/>
 
 

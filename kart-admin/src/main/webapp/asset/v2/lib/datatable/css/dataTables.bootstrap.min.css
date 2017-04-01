@@ -21,3 +21,6 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
 .table > thead > tr > td.danger, .table > tbody > tr > td.danger, .table > tfoot > tr > td.danger, .table > thead > tr > th.danger, .table > tbody > tr > th.danger, .table > tfoot > tr > th.danger, .table > thead > tr.danger > td, .table > tbody > tr.danger > td, .table > tfoot > tr.danger > td, .table > thead > tr.danger > th, .table > tbody > tr.danger > th, .table > tfoot > tr.danger > th {
     background-color: rgba(249, 189, 187, 0.5);
 }
+
+.header_colspan th{text-align:center;background-color:#f4f4f4;}
+.header_colspan th:nth-child(odd){background-color:#fff;}

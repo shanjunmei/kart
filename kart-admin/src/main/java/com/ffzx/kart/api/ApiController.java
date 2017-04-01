@@ -8,6 +8,7 @@ import com.ffzx.kart.pingxx.Pay;
 import com.ffzx.kart.pingxx.WebHooksVerify;
 import com.ffzx.kart.service.*;
 import com.ffzx.kart.util.JsonConverter;
+import com.ffzx.kart.util.SerialCodeGenerator;
 import com.ffzx.kart.vo.OrderModel;
 import com.ffzx.kart.vo.TicketModel;
 import com.ffzx.kart.wechat.WechatApiService;
@@ -53,6 +54,9 @@ public class ApiController {
 
     @Resource
     private WechatApiService wechatApiService;
+    
+    @Resource
+    private SerialCodeGenerator serialCodeGenerator;
 
     @RequestMapping("buyTicket")
     @ResponseBody
@@ -345,5 +349,16 @@ public class ApiController {
         return "success";
     }
 
+    @RequestMapping("wxPay")
+    @ResponseBody
+    public Object wxPay(Double total) {
+        Member member = getLoginMember();
+        String openid = "";
+        if (member != null) {
+            openid = member.getWxOpenid();
+        }
+        Charge charge = Pay.wxPay(total,serialCodeGenerator.getNum("order", 13), "wx_pub", null, openid);
+        return charge;
+    }
 
 }
