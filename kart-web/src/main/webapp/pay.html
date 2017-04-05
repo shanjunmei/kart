@@ -12,12 +12,42 @@
 </head>
 
 <body style="background:#f4f4f4;">
+<div class="info_bottom">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="25%" onclick="onInput('1')">1</td>
+    <td width="25%" onclick="onInput('2')">2</td>
+    <td width="25%" onclick="onInput('3')">3</td>
+    <td width="25%" align="center" valign="middle" onclick="onDelete()">
+    	<img src="images/pay_ico2.png" style=" height:19px; width:35px;margin: 16px"/>
+    </td>
+  </tr>
+  <tr>
+    <td onclick="onInput('4')">4</td>
+    <td onclick="onInput('5')">5</td>
+    <td onclick="onInput('6')">6</td>
+    <td rowspan="3" bgcolor="#fd9b34" style="color:#FFF; line-height:24px" onclick="kartpay()">确认<br/>支付</td>
+  </tr>
+  <tr>
+    <td onclick="onInput('7')">7</td>
+    <td onclick="onInput('8')">8</td>
+    <td onclick="onInput('9')">9</td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle" >    
+    	<img src="images/pay_ico1.png" style=" height:28px; width:36px;margin: 10px" onclick="noShow()"/>
+    </td>
+    <td onclick="onInput('0')">0</td>
+    <td onclick="onInput('.')">.</td>
+  </tr>
+</table>
+</div>
 <div class="info_head"> <span><img class="portrait" height="50" width="50" src="images/xt2.jpg" alt=""/>上海好药师江远药店</span> </div>
 <div class="info_form">
-  <dl>
+  <dl onclick="isShow()">
     <dt>输入消费金额</dt>
     <dd>
-      <input type="text" name="textfield" id="textfield" onkeyup="textfield()">
+      <div type="text" name="textfield" id="textfield">0</div>
     </dd>
   </dl>
 </div>
@@ -33,13 +63,13 @@
 </div>
 <div class="info_body">
   <dl>
-    <dt>销售税Sales Tax(8.5%)</dt>
+    <dt>销售税Sales Tax(8.5%)：</dt>
     <input type="hidden" name="salesTaxUnm" id="salesTaxUnm" value="0.085">
     <input type="hidden" name="salesTax" id="salesTax">
     <dd id="salesTaxDD">$0</dd>
   </dl>
   <dl>
-    <dt id="tipUnmDT">小费Tip(18%)</dt>
+    <dt id="tipUnmDT">小费Tip(18%)：</dt>
     <input type="hidden" name="tipUnm" id="tipUnm" value="0.18">
     <input type="hidden" name="tip" id="tip">
     <dd id="tipDD">$0</dd>
@@ -50,7 +80,7 @@
     <dd id="totalDD">$0</dd>
   </dl>
 </div>
-<div class="Button"><a href="javascript:#" onclick="kartpay()">确认支付</a></div>
+<!-- <div class="Button"><a href="javascript:#" onclick="kartpay()">确认支付</a></div> -->
 <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script> 
 <script type="text/javascript" src="js/fastclick.js"></script>
 <script type="text/javascript" src="js/ajaxUtils.js"></script>
@@ -65,6 +95,78 @@
 <script type="text/javascript">
 
 $.ajax({type: "get",url: location.protocol +'//'+ location.host + '/kart-admin/api/' + 'memberInfo.do'});
+
+//计算金额
+function textfield(){
+	var text = $("#textfield").html();
+	if(text == ''){
+		return;
+	}
+
+	var salesTax = (text * $("#salesTaxUnm").val()*1).toFixed(2);
+	$("#salesTax").val(salesTax);
+	$("#salesTaxDD").html("$"+salesTax);
+
+	var tip = (text * $("#tipUnm").val()*1).toFixed(2);
+	$("#tip").val(tip);
+	$("#tipDD").html("$"+tip);
+	
+	var total = (text*1 + tip*1 + salesTax*1).toFixed(2);
+	$("#total").val(total);
+	$("#totalDD").html("$"+total);
+}
+
+//数组输入
+function onInput(num){
+	var text = $("#textfield").html();
+	
+	if(text*1>500000){
+		return;
+	}
+	
+	text = text + num;
+
+	 var dot = text.indexOf(".");
+     if(dot != -1){
+         var dotCnt = text.substring(dot+1,text.length);
+         if(dotCnt.length > 2){
+			return;
+         }
+     }
+		
+	if(num != '.'){
+		$("#textfield").html(text*1);
+	}else{
+		var bbb = text.split(".");
+		if(bbb.length == 2){
+			$("#textfield").html(text);			
+		}
+	}
+	
+	textfield();
+}
+
+//删除
+function onDelete(){
+	var text = $("#textfield").html();
+	if(text.length > 0){
+		$("#textfield").html(text.substring(0,text.length-1));
+		if(text.length == 1){
+			$("#textfield").html(0);
+		}
+		textfield();
+	}
+}
+
+//隐藏输入框
+function noShow(){
+	$(".info_bottom").attr("style","display: none;");
+}
+
+//隐藏输入框
+function isShow(){
+	$(".info_bottom").attr("style","display: block;");
+}
 
 //马上购买支付函数
 function kartpay() {
@@ -115,44 +217,41 @@ function kartpay() {
     })
 }
 
-
-
 	function loadTip(tipNum,obj){
-		var text = $("#textfield").val();
+		var text = $("#textfield").html();
 		$("#tipUl a").attr("class","");
 		$(obj).attr("class","now");
 		$("#tipUnm").val(tipNum);
-		$("#tipUnmDT").html("小费Tip("+(tipNum*100).toFixed(0)+"%)");
+		$("#tipUnmDT").html("小费Tip("+(tipNum*100).toFixed(0)+"%)：");
 		if(text == ''){
 			return;
 		}
 		$("#tip").val((text * tipNum).toFixed(2));
 		$("#tipDD").html("$"+(text * tipNum).toFixed(2));
 		
-		var total = ($("#salesTax").val()*1 + $("#tip").val()*1 + $("#textfield").val()*1).toFixed(2)
+		var total = ($("#salesTax").val()*1 + $("#tip").val()*1 + $("#textfield").html()*1).toFixed(2)
 		$("#total").val(total);
 		$("#totalDD").html("$"+total);
 	}
-	function textfield(){
-		var text = $("#textfield").val();
-		if(text == ''){
-			return;
-		}
-
-		var salesTax = (text * $("#salesTaxUnm").val()*1).toFixed(2);
-		$("#salesTax").val(salesTax);
-		$("#salesTaxDD").html("$"+salesTax);
-
-		var tip = (text * $("#tipUnm").val()*1).toFixed(2);
-		$("#tip").val(tip);
-		$("#tipDD").html("$"+tip);
-		
-		var total = (text*1 + tip*1 + salesTax*1).toFixed(2);
-		$("#total").val(total);
-		$("#totalDD").html("$"+total);
-	}
+	
+	
 </script>
 <style type="text/css">
+body,ul,a,li,img,dt,dl,dd,h1,h2,h3,h4,h5,h6,h7,input,p,form{margin:0px;padding:0px;}
+input{font-family:"Arial","苹方","思源黑体","微软雅黑";}
+html,body{height:100%;font-size:12px;}
+body{font-family:"Arial","苹方","思源黑体","微软雅黑"; line-height:1.5; font-size:12px;color:#333; background-color: #f2f4f7;}
+img{vertical-align:top;}
+.bg-cover-square{ background-position:50% 50%; background-size:cover; width:100%;}
+ul{list-style:none;}
+a{ text-decoration:none; color:#333;blr:expression(this.onFocus=this.blur());outline:none;-webkit-tap-highlight-color:transparent;}
+input[type=button], input[type=submit], input[type=file], button { cursor: pointer; -webkit-appearance: none; } 
+/*以上的css不用，只要下面这两句css*/
+.info_bottom{ position:fixed; left:0; bottom:0; right:0;border-right:1px solid #eee; background:#FFF;}
+.info_bottom td{ border-left:1px solid #eee;border-top:1px solid #eee; font-size:18px; font-weight:bold; text-align: center; line-height:46px;}
+
+
+
 .copyright-con{font-size: 14px; color: #888;}
 .info_head{ padding:10px 10px 0 66px; height:70px;text-align:center; font-size:16px;}
 .info_head span{ position:relative; display:inline-block; height:50px; line-height:50px; }
