@@ -538,6 +538,76 @@ public class MemberExample extends GenericExample<Criteria> {
             return (Criteria) this;
         }
 
+        public Criteria andWxUnionidIsNull() {
+            addCriterion("wx_unionid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUnionidIsNotNull() {
+            addCriterion("wx_unionid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUnionidEqualTo(String value) {
+            addCriterion("wx_unionid =", value, "wxUnionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUnionidNotEqualTo(String value) {
+            addCriterion("wx_unionid <>", value, "wxUnionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUnionidGreaterThan(String value) {
+            addCriterion("wx_unionid >", value, "wxUnionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUnionidGreaterThanOrEqualTo(String value) {
+            addCriterion("wx_unionid >=", value, "wxUnionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUnionidLessThan(String value) {
+            addCriterion("wx_unionid <", value, "wxUnionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUnionidLessThanOrEqualTo(String value) {
+            addCriterion("wx_unionid <=", value, "wxUnionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUnionidLike(String value) {
+            addCriterion("wx_unionid like", value, "wxUnionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUnionidNotLike(String value) {
+            addCriterion("wx_unionid not like", value, "wxUnionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUnionidIn(List<String> values) {
+            addCriterion("wx_unionid in", values, "wxUnionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUnionidNotIn(List<String> values) {
+            addCriterion("wx_unionid not in", values, "wxUnionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUnionidBetween(String value1, String value2) {
+            addCriterion("wx_unionid between", value1, value2, "wxUnionid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUnionidNotBetween(String value1, String value2) {
+            addCriterion("wx_unionid not between", value1, value2, "wxUnionid");
+            return (Criteria) this;
+        }
+
         public Criteria andWxNickNameIsNull() {
             addCriterion("wx_nick_name is null");
             return (Criteria) this;

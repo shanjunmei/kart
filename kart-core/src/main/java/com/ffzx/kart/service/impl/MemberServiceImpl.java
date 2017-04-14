@@ -35,4 +35,15 @@ public class MemberServiceImpl extends BaseServiceImpl<Member,String> implements
         }
         return null;
     }
+
+    @Override
+    public Member findByUnionId(String unionId) {
+        MemberExample example=new MemberExample();
+        example.createCriteria().andWxUnionidEqualTo(unionId);
+        List<Member> dataList=mapper.selectByExample(example);
+        if(dataList!=null&&dataList.size()>0){
+            return dataList.get(0);
+        }
+        return null;
+    }
 }

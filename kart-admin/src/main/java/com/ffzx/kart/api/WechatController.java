@@ -66,7 +66,7 @@ public class WechatController {
     public void oauth(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
         String code = request.getParameter("code");
-        Map<String, String> map = wechatApiService.oauth(code);
+        Map<String, String> map = wechatApiService.oauth(code,null);
         Member info = new Member();
         info.setWxOpenid(map.get("openid"));
         info.setWxNickName(map.get("nickname"));

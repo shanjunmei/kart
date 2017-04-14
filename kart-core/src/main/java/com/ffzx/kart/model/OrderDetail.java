@@ -40,7 +40,7 @@ public class OrderDetail extends BaseEntity {
     private String time;
 
     /**
-     * 状态
+     * 状态(0:正常；1:已退款；)
      */
     private String status;
 
@@ -153,18 +153,18 @@ public class OrderDetail extends BaseEntity {
     }
 
     /**
-     * 获取状态
+     * 获取状态(0:正常；1:已退款；)
      *
-     * @return status - 状态
+     * @return status - 状态(0:正常；1:已退款；)
      */
     public String getStatus() {
         return status;
     }
 
     /**
-     * 设置状态
+     * 设置状态(0:正常；1:已退款；)
      *
-     * @param status 状态
+     * @param status 状态(0:正常；1:已退款；)
      */
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();

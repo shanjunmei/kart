@@ -29,7 +29,7 @@ public interface WechatApiService {
 	 * @param code
 	 * @return
 	 */
-	public Map<String,String> oauth(String code);
+	public Map<String,String> oauth(String code,String authType);
 
 	Map<String, String> getWxUserInfo(String openid, String accessToken);
 

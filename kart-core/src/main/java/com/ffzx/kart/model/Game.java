@@ -30,7 +30,7 @@ public class Game extends BaseEntity {
     private BigDecimal preferentialPrice;
 
     /**
-     * 参赛人数
+     * 已参赛人数
      */
     @Column(name = "participants_number")
     private String participantsNumber;
@@ -160,18 +160,18 @@ public class Game extends BaseEntity {
     }
 
     /**
-     * 获取参赛人数
+     * 获取已参赛人数
      *
-     * @return participants_number - 参赛人数
+     * @return participants_number - 已参赛人数
      */
     public String getParticipantsNumber() {
         return participantsNumber;
     }
 
     /**
-     * 设置参赛人数
+     * 设置已参赛人数
      *
-     * @param participantsNumber 参赛人数
+     * @param participantsNumber 已参赛人数
      */
     public void setParticipantsNumber(String participantsNumber) {
         this.participantsNumber = participantsNumber == null ? null : participantsNumber.trim();

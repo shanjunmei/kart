@@ -11,4 +11,6 @@ public interface MemberService extends BaseService<Member,String>{
 
     public Member findByOpenId(String opoenid);
 
+    public Member findByUnionId(String unionId);
+
 }

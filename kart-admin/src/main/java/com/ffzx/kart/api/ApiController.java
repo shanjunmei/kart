@@ -193,20 +193,25 @@ public class ApiController {
         Map<String, Object> ret = new HashMap<>();
 
         String authCode = request.getParameter("authCode");
+        String authType=request.getParameter("authType");
         String refer = request.getParameter("refer");
         logger.info("authCode :{}", authCode);
         logger.info("refer :{}", refer);
         String openId = null;
+        String unionId=null;
 
         Member member = getLoginMember();
         ;
         boolean iscreate = true;
         if (member == null) {
             if (StringUtils.isNotBlank(authCode)) {
-                Map<String, String> map = wechatApiService.oauth(authCode);
+                Map<String, String> map = wechatApiService.oauth(authCode,authType);
                 logger.info(JsonConverter.toJson(map));
                 openId = map.get("openid");
-                member = memberService.findByOpenId(openId);
+                unionId=map.get("unionid");
+
+
+                member = memberService.findByUnionId(unionId);
                 if (member != null) {
                     iscreate = false;
                 } else {
@@ -216,6 +221,7 @@ public class ApiController {
                 member.setWxOpenid(map.get("openid"));
                 member.setWxNickName(map.get("nickname"));
                 member.setWxHeadimgurl(map.get("headimgurl"));
+                member.setWxUnionid(map.get("unionid"));
                 if (iscreate) {
                     memberService.add(member);
                 } else {

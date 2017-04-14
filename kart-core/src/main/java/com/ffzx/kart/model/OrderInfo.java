@@ -43,7 +43,7 @@ public class OrderInfo extends BaseEntity {
     private String memberPhone;
 
     /**
-     * 订单状态
+     * 订单状态(0:未支付；1:已支付；2:已退款)
      */
     private String status;
 
@@ -264,18 +264,18 @@ public class OrderInfo extends BaseEntity {
     }
 
     /**
-     * 获取订单状态
+     * 获取订单状态(0:未支付；1:已支付；2:已退款)
      *
-     * @return status - 订单状态
+     * @return status - 订单状态(0:未支付；1:已支付；2:已退款)
      */
     public String getStatus() {
         return status;
     }
 
     /**
-     * 设置订单状态
+     * 设置订单状态(0:未支付；1:已支付；2:已退款)
      *
-     * @param status 订单状态
+     * @param status 订单状态(0:未支付；1:已支付；2:已退款)
      */
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();

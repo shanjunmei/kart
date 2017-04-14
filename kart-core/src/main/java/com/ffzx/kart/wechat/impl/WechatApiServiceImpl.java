@@ -30,7 +30,7 @@ public class WechatApiServiceImpl implements WechatApiService {
         String secret = System.setProperty("wechat.secret", "aa2f47e8ab66a4f85376196047e6f629");
         String appid = System.setProperty("wechat.appid", "wx54dc8317bb37cec5");
         WechatApiServiceImpl service = new WechatApiServiceImpl();
-        Map auth = service.oauth("snsapi_base");
+        Map auth = service.oauth("snsapi_base",null);
         System.out.println(auth);
         String wxpenid = "o32Qyv-U9hCu8Ik0wJXf7w3D6ru0";// jj o32Qyv-U9hCu8Ik0wJXf7w3D6ru0
         // my o32QyvzA8VjE9LhyGxmpWDZwvJr4
@@ -118,9 +118,13 @@ public class WechatApiServiceImpl implements WechatApiService {
     /***
      *微信授权
      */
-    public Map<String, String> oauth(String code) {
-        String secret = System.getProperty("wechat.secret");
+    public Map<String, String> oauth(String code,String authType) {
         String appid = System.getProperty("wechat.appid");
+        String secret = System.getProperty("wechat.secret");
+        if("app".equals(authType)){
+            appid = System.getProperty("wechat.app.appid");
+            secret = System.getProperty("wechat.app.secret");
+        }
 
         String get_access_token_url = "https://api.weixin.qq.com/sns/oauth2/access_token?" +
                 "appid=" + appid +
@@ -128,6 +132,7 @@ public class WechatApiServiceImpl implements WechatApiService {
                 "code=" + code + "&grant_type=authorization_code";
 
         String openid = "";
+        String unionid="";
         String accessToken = "";
 
         //获取授权access_token以及openid
@@ -138,12 +143,17 @@ public class WechatApiServiceImpl implements WechatApiService {
             result = JsonConverter.from(res, Map.class);
             accessToken = (String) result.get("access_token");
             openid = (String) result.get("openid");
+            unionid=(String)result.get("unionId");
 
         } catch (Exception e) {
             logger.info("auth fail", e);
         }
 
         Map<String, String> map = getWxUserInfo(openid, accessToken);
+        if(StringUtils.isBlank(map.get("unionid"))){
+            logger.info("getWxUserInfo is null{}",map);
+            map.put("unionid",unionid);
+        }
 
         return map;
     }
@@ -171,6 +181,8 @@ public class WechatApiServiceImpl implements WechatApiService {
             map.put("openid", (String) result.get("openid"));
             map.put("nickname", (String) result.get("nickname"));
             map.put("headimgurl", (String) result.get("headimgurl"));
+            map.put("unionid",(String)result.get("unionid"));
+
             // accessToken = (String) result.get("access_token");
         } catch (Exception e) {
             logger.info("auth fail", e);

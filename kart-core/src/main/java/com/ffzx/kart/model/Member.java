@@ -34,6 +34,12 @@ public class Member extends BaseEntity {
     private String wxOpenid;
 
     /**
+     * 微信开放平台unionid
+     */
+    @Column(name = "wx_unionid")
+    private String wxUnionid;
+
+    /**
      * 昵称
      */
     @Column(name = "wx_nick_name")
@@ -151,6 +157,24 @@ public class Member extends BaseEntity {
      */
     public void setWxOpenid(String wxOpenid) {
         this.wxOpenid = wxOpenid == null ? null : wxOpenid.trim();
+    }
+
+    /**
+     * 获取微信开放平台unionid
+     *
+     * @return wx_unionid - 微信开放平台unionid
+     */
+    public String getWxUnionid() {
+        return wxUnionid;
+    }
+
+    /**
+     * 设置微信开放平台unionid
+     *
+     * @param wxUnionid 微信开放平台unionid
+     */
+    public void setWxUnionid(String wxUnionid) {
+        this.wxUnionid = wxUnionid == null ? null : wxUnionid.trim();
     }
 
     /**
